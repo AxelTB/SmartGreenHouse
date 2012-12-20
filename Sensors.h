@@ -6,6 +6,8 @@
 
 #define DHT11PIN 8
 #define LEVELPIN 14
+#define LIGHTAPIN 0
+
 
 #define GOODLEVEL LOW
 #define DHT11MAXERRN 5
@@ -44,8 +46,10 @@ int Sensors::update(State *state)
         	state->esensors|=State::ESENS_DHT11ERR;
 	state->log(State::ERROR,"Dht11 minor error");
     }
-    //Set level according to level sensor
+    //Set level according to level sensor----------------------------------
     state->level=(digitalRead(LEVELPIN)==GOODLEVEL);
+    //Read Light sensor
+    state->light=analogRead(LIGHTAPIN);
 }
 
 /** @brief setup

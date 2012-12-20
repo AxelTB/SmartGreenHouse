@@ -14,7 +14,7 @@ public:
     boolean heater,humidifier;
     //State variable----------
     float temp;
-    short humidity;
+    short humidity,light;
     boolean level;
 
     //Errors variable---------
