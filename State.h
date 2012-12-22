@@ -72,7 +72,9 @@ int State::saveStats()
     Serial.print(",");
     Serial.print(this->humidity);
     Serial.print(",");
-    Serial.println(this->humidifier);
+    Serial.print(this->humidifier);
+        Serial.print(",");
+    Serial.println(this->light);
 #endif
     if(!this->sdstatus)
        return 1;
@@ -87,7 +89,9 @@ int State::saveStats()
     myFile.print(",");
     myFile.print(this->humidity);
     myFile.print(",");
-    myFile.println(this->humidifier);
+    myFile.print(this->humidifier);
+    myFile.print(",");
+    myFile.println(this->light);
 
     myFile.close();
     //Serial out---------------------------------------

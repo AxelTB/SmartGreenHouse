@@ -47,7 +47,12 @@ int Sensors::update(State *state)
 	state->log(State::ERROR,"Dht11 minor error");
     }
     //Set level according to level sensor----------------------------------
-    state->level=(digitalRead(LEVELPIN)==GOODLEVEL);
+    if((digitalRead(LEVELPIN)==GOODLEVEL)!=state->level)
+    {
+      //Level change
+      state->log(State::ERROR,"Low Water level");
+    }
+      state->level=(digitalRead(LEVELPIN)==GOODLEVEL);
     //Read Light sensor
     state->light=analogRead(LIGHTAPIN);
 }
