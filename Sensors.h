@@ -5,13 +5,13 @@
 #include <dht11.h>
 
 #define DHT11PIN 8
-#define LEVELPIN 14
+#define LEVELPIN 9
 #define LIGHTAPIN 0
 
 #define LIGHTTAU 10
 #define HUMIDITYTAU 120
 
-#define GOODLEVEL LOW
+#define GOODLEVEL HIGH
 #define DHT11MAXERRN 5
 class Sensors
 {
