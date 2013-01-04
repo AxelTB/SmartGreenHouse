@@ -57,11 +57,11 @@ int State::setup(short sdpin)
   //Initialize error variable
   this->esensors=0;
   this->eactuators=0;
-  
+
   this->heater=0;
   this->heaterCable=0;
   this->humidifier=0;
-  
+
 }
 /***
  * Return:
@@ -94,7 +94,13 @@ int State::saveStats()
 
   File myFile = SD.open("temp.txt",FILE_WRITE);
   if (!myFile)
+  {
+#ifdef SERIALOUT
+    Serial.println("SD Error");
+#endif
     return -1;
+  }
+
 
   myFile.print(this->temp);
   myFile.print(",");
@@ -107,7 +113,7 @@ int State::saveStats()
   myFile.print(this->heaterCable);
   myFile.print(",");
   myFile.print(this->light);
- myFile.print(",");
+  myFile.print(",");
   myFile.print(this->flight);
   myFile.print(",");
   myFile.print(this->fhumidity);
@@ -133,12 +139,13 @@ int State::log(byte level,char *data)
   myFile.println(data);
 
   myFile.close();
-
+#ifdef SERIALOUT
   Serial.print((int) level);
   Serial.print(",");
   Serial.println(data);
-
+#endif
   return 0;
 }
 #endif // STATE_H
+
 
