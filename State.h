@@ -12,6 +12,7 @@ class State
 public:
   //Actuators---------------
   boolean heater,humidifier,heaterCable;
+  unsigned short outFan;
   //State variable----------
   float temp;
   short humidity,light;
@@ -61,7 +62,7 @@ int State::setup(short sdpin)
   this->heater=0;
   this->heaterCable=0;
   this->humidifier=0;
-
+  this->outFan=255;
 }
 /***
  * Return:
@@ -87,6 +88,8 @@ int State::saveStats()
   Serial.print(this->flight);
   Serial.print(",");
   Serial.print(this->fhumidity);
+  Serial.print(",");
+  Serial.print(this->outFan);
   Serial.println();
 #endif
   if(!this->sdstatus)

@@ -8,14 +8,19 @@
 #define HUMPIN 3
 #define HEATCABLEPIN 4
 
-#define TDELTA 6
+#define TDELTA 8
 #define TTARGET 20
 
 #define HDELTA 10
-#define HTARGET 60
+#define HTARGET 40
 
 #define HCDELTA 0
 #define HCTARGET 23
+
+#define OUTFPIN   10
+#define OUTFONT     300000l
+#define OUTFIDLET   3300000l 
+#define OUTFPOWER   200
 
 class Actuators
 {
@@ -27,6 +32,8 @@ class Actuators
 	private:
 		unsigned short heatpin,humpin;
 		ControlOnOff t,h,tc;
+
+                long outftime;
 
 };
 /** @brief update
@@ -89,7 +96,22 @@ int Actuators::update(State *state)
 
 
 	}
-	//-------------------------------------------------------------
+	//Fresh Air Cicle-------------------------------------------------------------
+        //If active for enought time
+        if(state->outFan>0 && millis()-outftime>OUTFONT)
+        {
+          //Turn Off
+            state->outFan=0;
+            outftime=millis();
+        }
+        //If idle for enought time
+        else if(state->outFan==0 && millis()-outftime>OUTFIDLET)
+        {
+          state->outFan=OUTFPOWER;
+            outftime=millis();
+        }
+        //Update status
+        digitalWrite(OUTFPIN,state->outFan);
 
 }
 
@@ -102,7 +124,12 @@ int Actuators::setup()
 	pinMode(HEATPIN,OUTPUT); //Set Heater pin
 	pinMode(HUMPIN,OUTPUT);  //Humidifier pin
 	pinMode(HEATCABLEPIN,OUTPUT);
-
+        pinMode(OUTFPIN,OUTPUT);
+        
+        digitalWrite(OUTFPIN,255);
+        outftime=millis();
+        
+        
 	digitalWrite(HEATPIN,LOW);
 	digitalWrite(HUMPIN,LOW);
 	digitalWrite(HEATCABLEPIN,LOW);
@@ -112,6 +139,8 @@ int Actuators::setup()
 	h.setTarget(HTARGET); //Set humidity target
 	tc.setup(HCDELTA,0,0,0,60,0);
 	tc.setTarget(HCTARGET);
+
+        
 
 }
 

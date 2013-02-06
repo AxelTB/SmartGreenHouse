@@ -5,7 +5,7 @@
 #include <dht11.h>
 
 #define DHT11PIN 8
-#define LEVELPIN 9
+#define LEVELPIN 5
 #define LIGHTAPIN 0
 
 #define LIGHTTAU 10
