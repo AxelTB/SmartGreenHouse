@@ -120,6 +120,8 @@ int State::saveStats()
   myFile.print(this->flight);
   myFile.print(",");
   myFile.print(this->fhumidity);
+  myFile.print(",");
+  myFile.print(this->outFan);
   myFile.println();
   myFile.close();
   //Serial out---------------------------------------
