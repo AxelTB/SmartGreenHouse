@@ -2,13 +2,13 @@
 #define CICLETIMER_H
 
 
-class cicleTimer
+class ControlTimer
 {
     public:
-        cicleTimer() {}
-        cicleTimer(long Periodms,long OnTimems);
+        ControlTimer() {}
+        ControlTimer(long Periodms,long OnTimems);
         bool update(long mills);
-        ~cicleTimer() {}
+        ~ControlTimer() {}
     protected:
     private:
     long time,OffTime,OnTime;
@@ -18,7 +18,7 @@ class cicleTimer
   *
   * @todo: document this function
   */
-bool cicleTimer::update(long mills)
+bool ControlTimer::update(long mills)
 {
     long dt=mills-this->time;
     if(status && dt>this->OnTime)
@@ -35,11 +35,11 @@ bool cicleTimer::update(long mills)
     return this->status;
 }
 
-/** @brief cicleTimer
+/** @brief ControlTimer
   *
   * @todo: document this function
   */
- cicleTimer::cicleTimer(long Periodms,long OnTimems)
+ ControlTimer::ControlTimer(long Periodms,long OnTimems)
 {
     this->OffTime=Periodms-OnTimems;
     this->OnTime=OnTimems;

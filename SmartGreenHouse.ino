@@ -8,7 +8,6 @@
 
 #include <SD.h>
 #include <Wire.h>
-#include <bv4236.h>
 #include "Actuators.h"
 #include "Sensors.h"
 //#include "Log.h"

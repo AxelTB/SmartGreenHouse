@@ -3,7 +3,7 @@
 
 #include "State.h"
 #include "ControlOnOff.h"
-#include "cicleTimer.h"
+#include "ControlTimer.h"
 
 #define HEATPIN 2
 #define HUMPIN 3
@@ -33,7 +33,7 @@ protected:
 private:
   unsigned short heatpin,humpin;
   ControlOnOff t,h,tc;
-  cicleTimer cth,ctof;
+  ControlTimer cth,ctof;
 
   long outftime;
 
@@ -141,8 +141,8 @@ int Actuators::setup()
   tc.setTarget(HCTARGET);
 
   //Timered version
-  cth=cicleTimer(600000,240000);
-  ctof=cicleTimer(1800000,120000);
+  cth=ControlTimer(600000,240000);
+  ctof=ControlTimer(1800000,120000);
 
 }
 
