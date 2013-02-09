@@ -93,13 +93,16 @@ int State::saveStats()
   Serial.println();
 #endif
   if(!this->sdstatus)
+  {
+    Serial.println("SD Error");
     return 1;
+  }
 
   File myFile = SD.open("temp.txt",FILE_WRITE);
   if (!myFile)
   {
 #ifdef SERIALOUT
-    Serial.println("SD Error");
+    Serial.println("Error opening file");
 #endif
     return -1;
   }

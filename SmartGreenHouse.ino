@@ -10,7 +10,6 @@
 #include <Wire.h>
 #include "Actuators.h"
 #include "Sensors.h"
-//#include "Log.h"
 #include "State.h"
 #define FILENAME "temp.txt"
 
@@ -31,6 +30,7 @@ void setup()
 //Actuators-----------------------------------
   
   pinMode(LEDPIN,OUTPUT);  //Status led pin
+  
   act.setup();
 //Sensors--------------------------------------
   sens.setup();

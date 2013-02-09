@@ -8,6 +8,7 @@
 #define HEATPIN 2
 #define HUMPIN 3
 #define HEATCABLEPIN 4
+#define OUTFPIN   10
 
 #define TDELTA 8
 #define TTARGET 20
@@ -17,11 +18,6 @@
 
 #define HCDELTA 0
 #define HCTARGET 23
-
-#define OUTFPIN   10
-#define OUTFONT     300000l
-#define OUTFIDLET   3300000l 
-#define OUTFPOWER   200
 
 class Actuators
 {
@@ -145,6 +141,7 @@ int Actuators::setup()
   ctof=ControlTimer(1800000,120000);
 
 }
+
 
 
 #endif // ACTUATORS_H
