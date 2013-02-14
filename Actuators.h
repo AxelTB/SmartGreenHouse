@@ -75,33 +75,36 @@ int Actuators::update(State *state)
       state->heaterCable=tc.getStatus();
       digitalWrite(HEATCABLEPIN,state->heaterCable);
     }
-    /*Controlled version
-     		//Humidity------------------------------------------------------
-     		//If water level is not good shut down humidifier
-     		if(state->level==0)
-     			state->humidifier=0;
-     		//or evaluate status
-     		else if(  (ret=h.updateStatus(state->humidity))>=0)
-     			state->humidifier=h.getStatus();
-     		//Update humidifier status
-     		digitalWrite(HUMPIN,state->humidifier);
-     */
-    if(ret==3)
-      state->log(State::INFORMATION,"Humidifier Maximum uptime reached");
-    else if(ret==-2)
-    {
-      state->eactuators=State::ESENS_HOUTOFBOUND;
-      state->log(State::ERROR,"Humidity out of bound");
-    }
+    //Controlled version
+    //Humidity------------------------------------------------------
+    //If water level is not good shut down humidifier
+    if(state->level==0)
+      state->humidifier=0;
+    //or evaluate status
+    else if(  (ret=h.updateStatus(state->humidity))>=0)
+      state->humidifier=h.getStatus();
+    //Update humidifier status
+    digitalWrite(HUMPIN,state->humidifier);
+
+    
+     if(ret==3)
+     state->log(State::INFORMATION,"Humidifier Maximum uptime reached");
+     else if(ret==-2)
+     {
+     state->eactuators=State::ESENS_HOUTOFBOUND;
+     state->log(State::ERROR,"Humidity out of bound");
+     }
 
 
   }
+  /*
   //Humidifier timered version
   state->humidifier=cth.update(millis());
   if(state->level)
     digitalWrite(HUMPIN,state->humidifier);
   else
     digitalWrite(HUMPIN,LOW);
+    */
   //Fresh Air Cicle-------------------------------------------------------------
   state->outFan=ctof.update(millis())*255;
   analogWrite(OUTFPIN,(int) state->outFan);
@@ -129,11 +132,11 @@ int Actuators::setup()
   t.setup(TDELTA,300000,60000,240000,60,0);//Set temperature maximum variation around target
   t.setTarget(TTARGET); //Set temperature target
 
-  /* Controlled version
+ //Controlled  hu,idifierversion
    	h.setup(HDELTA,0,0,0,90,10); //Set humidity maximum variation around target
    	h.setTarget(HTARGET); //Set humidity target
-   */
-  tc.setup(HCDELTA,0,0,0,60,0);
+ //Timered humidifier version
+  tc.setup(HCDELTA,1200000,0,120000,70,0);
   tc.setTarget(HCTARGET);
 
   //Timered version
@@ -145,6 +148,7 @@ int Actuators::setup()
 
 
 #endif // ACTUATORS_H
+
 
 
 
