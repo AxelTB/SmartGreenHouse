@@ -103,8 +103,8 @@ int Actuators::update(State *state)
   else
     digitalWrite(HUMPIN,LOW);
   //Fresh Air Cicle-------------------------------------------------------------
-  state->outFan=ctof.update(millis());
-  analogWrite(OUTFPIN,(int) state->outFan*255);
+  state->outFan=ctof.update(millis())*255;
+  analogWrite(OUTFPIN,(int) state->outFan);
 
 }
 
