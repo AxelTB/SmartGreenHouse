@@ -16,8 +16,8 @@
 #define HDELTA 10
 #define HTARGET 40
 
-#define HCDELTA 0
-#define HCTARGET 23
+#define HCDELTA 4
+#define HCTARGET 25
 
 class Actuators
 {
