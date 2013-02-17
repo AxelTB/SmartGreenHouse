@@ -19,14 +19,14 @@ All actuators code goes there
 #define HEATCABLEPIN 4
 #define OUTFPIN   10
 
+
+
+
 #define TDELTA 8
-#define TTARGET 20
 
 #define HDELTA 10
-#define HTARGET 40
 
 #define HCDELTA 4
-#define HCTARGET 25
 
 class Actuators
 {
@@ -54,6 +54,13 @@ int Actuators::update(State *state)
 {
   int ret;
   state->eactuators=0;
+  //Update actuator target-------------------------------------------------------
+  //TODO: Avoid update if target not changed
+  t.setTarget(state->tTemp); //Set heater target
+  tc.setTarget(state->tTemp);    //Set heat Cable target
+  h.setTarget(state->tHum); //Set humidifier target
+  
+  
   //Verify DHT11 state--------------------------------------------------------------------------------
   //If sensoor major error
   if(state->esensors&State::ESENS_DHT11ERR)
@@ -140,14 +147,14 @@ int Actuators::setup()
   digitalWrite(HUMPIN,LOW);
   digitalWrite(HEATCABLEPIN,LOW);
   t.setup(TDELTA,300000,60000,240000,60,0);//Set temperature maximum variation around target
-  t.setTarget(TTARGET); //Set temperature target
+  
 
  //Controlled  hu,idifierversion
    	h.setup(HDELTA,0,0,0,90,10); //Set humidity maximum variation around target
-   	h.setTarget(HTARGET); //Set humidity target
+   	
  //Timered humidifier version
   tc.setup(HCDELTA,1200000,0,120000,70,0);
-  tc.setTarget(HCTARGET);
+  
 
   /* //Timered Humidifier version
   cth=ControlTimer(600000,240000);*/

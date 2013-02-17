@@ -7,10 +7,15 @@
 //Undefine to disable serial
 #define SERIALOUT
 
+//Target temperature and humidity
+#define TTEMP 21
+#define THUM  40
 
 class State
 {
 public:
+  //Target variable
+  int tTemp,tHum;
   //Actuators---------------
   boolean heater,humidifier,heaterCable;
   unsigned short outFan;
@@ -64,6 +69,9 @@ int State::setup(short sdpin)
   this->heaterCable=0;
   this->humidifier=0;
   this->outFan=255;
+  
+  this->tTemp=TTEMP;
+  this->tHum=THUM;
 }
 /***
  * Return:
