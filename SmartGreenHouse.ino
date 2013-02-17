@@ -11,10 +11,6 @@
 #include "Actuators.h"
 #include "Sensors.h"
 #include "State.h"
-#define FILENAME "temp.txt"
-
-#define LEDPIN 13
-#define SDPIN 9 //ALSO 11,12 and 13
 
 File myFile;
 short tret;
@@ -22,25 +18,28 @@ short tret;
 Actuators act;
 Sensors sens;
 State state;
+long time;
+
 void setup()
 {
   Serial.begin(9600); // only required for testing
   Serial.print("Setup...");
   state.setup(SDPIN);
 //Actuators-----------------------------------
-  
-  pinMode(LEDPIN,OUTPUT);  //Status led pin
-  
+   
   act.setup();
 //Sensors--------------------------------------
   sens.setup();
  
   Serial.println("DONE!");
+  time=millis();
 }
 
 
 double temp;
 int humidity;
+
+
 void loop()
 {
   sens.update(&state);
@@ -48,8 +47,8 @@ void loop()
 
   //SD Log -------------------------------------------
   state.saveStats();
-  //---------------------------------------------
-  delay(1000);
+  //Wait for looptime---------------------------------------------
+  while(millis()-time<LOOPT*1000);
 }
 
 

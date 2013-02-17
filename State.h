@@ -2,7 +2,8 @@
 #define STATE_H
 
 #include <SD.h>
-
+#define LOOPT 1 //Loop Time
+#define SDPIN 9 //ALSO 11,12 and 13
 //Undefine to disable serial
 #define SERIALOUT
 
@@ -31,7 +32,7 @@ public:
   int saveStats();
   int log(byte level,char *data);
 
-  //Error flags for sensors
+  //Error flags for sensors---------------------------------------------------------------
   static const byte ESENS_DHT11ERR=0b1;
   static const byte ESENS_TOUTOFBOUND=0b10;
   static const byte ESENS_HOUTOFBOUND=0b100;
