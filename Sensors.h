@@ -15,12 +15,14 @@
 #define DHT11MAXERRN 5
 class Sensors
 {
+ //To be used with noisy input
   class LowPassFilter
   {
 public:
-    void setup(float tau_s,float dt_s)
+//Pole tau and dt setting. dt_s is LOOPT and tau_s must be tuned for the
+    void setup(float tau_s)
     {
-      this->a=tau_s/(tau_s+dt_s);
+      this->a=tau_s/(tau_s+LOOPT);
     }
     float update(float value)
     {
@@ -95,8 +97,8 @@ int Sensors::setup()
   //Set error number to 0
   this->dht11errN=0;
   //Filter definition
-  this->lplight.setup(LIGHTTAU,1);
-  this->lphumidity.setup(HUMIDITYTAU,1);
+  this->lplight.setup(LIGHTTAU);
+  this->lphumidity.setup(HUMIDITYTAU);
 
 }
 
