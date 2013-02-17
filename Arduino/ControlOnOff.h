@@ -1,8 +1,13 @@
-/***
-* SmartGreenHouse ControlOnOff
-*
-* Author: Axxx
-*/
+/*******************************************************************
+*                   ==SmartGreenHouse==
+*   Control On/Off Class
+*   Created: 17/02/2013
+*   Author:  Ax
+*   License:
+=====================================================================
+Control Class for digital actuators
+Activate an actuator if a state condition is below the target. Implements histeresys, Max On Time and minimum transition time separately.
+********************************************************************/
 /*
 Day 21~23
  Night 18
@@ -23,22 +28,22 @@ class ControlOnOff
 public:
     void setup(unsigned short delta);
     void setup(unsigned short delta,unsigned long MaxOnTime,unsigned long MinOnTime,unsigned long MinOffTime,int HighBound,int LowBound);
-    int updateStatus(float temp);
+    int updateStatus(float val);
     unsigned short getStatus();
     void setTarget(float Target);
     float getTarget();
-    unsigned short adaptiveUpdate(float temp);
-    
+    unsigned short adaptiveUpdate(float val);
+
     void DebugStatistic(char *dbgstr);
 private:
-    
+
     short status;
     unsigned short nfault,delta;
     unsigned long uptime,lasttransition,nextdelay;
 
     //Treesholds in common and differential
     float tcommon,tdiff;
-    //Target temperature
+    //Target valerature
     float target;
     //Time constants
     unsigned long MaxOnTime,MinOnTime,MinOffTime;
@@ -49,14 +54,14 @@ private:
 };
 /** @brief UpdateStatus
  *         return  >=0 Status updated
- *                  -2 Temp out of bound
+ *                  -2 val out of bound
  *                  -1
  *                 <0 Not updated
  *
  *
  * @todo: document this function
  */
-int ControlOnOff::updateStatus(float temp)
+int ControlOnOff::updateStatus(float val)
 {
 
     //Check for too long uptime------------------------------------------
@@ -69,8 +74,8 @@ int ControlOnOff::updateStatus(float temp)
 
         return 3;
     }
-    //Evaluate if temp realistic-----------------------------------------
-    if(temp<LowBound||temp>HighBound)
+    //Evaluate if val realistic-----------------------------------------
+    if(val<LowBound||val>HighBound)
     {
         //If not try again in half minute
         this->nextdelay=30000;
@@ -91,7 +96,7 @@ int ControlOnOff::updateStatus(float temp)
     else
         setTarget(23);
 */
-    return adaptiveUpdate(temp);
+    return adaptiveUpdate(val);
 
 
 }
@@ -111,25 +116,25 @@ unsigned short ControlOnOff::getStatus()
  *
  * @todo: document this function
  */
-unsigned short ControlOnOff::adaptiveUpdate(float temp)
+unsigned short ControlOnOff::adaptiveUpdate(float val)
 {
     //Evaluate treeshold
-    float mintemp=tcommon-tdiff;
-    float maxtemp=tcommon+tdiff;
+    float minval=tcommon-tdiff;
+    float maxval=tcommon+tdiff;
 
-    //Statistical temperature---------------------------------------------
-    this->stmedian=temp/MEDTIME+(this->stmedian*(1.0f-1.0/MEDTIME));
-    if(this->stlow > temp)
-        this->stlow= temp;
-    else if(this->sthigh<temp)
-        this->sthigh=temp;
+    //Statistical valerature---------------------------------------------
+    this->stmedian=val/MEDTIME+(this->stmedian*(1.0f-1.0/MEDTIME));
+    if(this->stlow > val)
+        this->stlow= val;
+    else if(this->sthigh<val)
+        this->sthigh=val;
 
     //Avoid too close transitions and update status-----------------------
     if((millis()-lasttransition)>this->nextdelay)
     {
         this->lasttransition=millis();
 
-        if(temp<=mintemp)
+        if(val<=minval)
         {
             this->status=1;
             if(this->uptime==0)
@@ -140,7 +145,7 @@ unsigned short ControlOnOff::adaptiveUpdate(float temp)
             else
                 this->nextdelay=0;
         }
-        else if(temp>=maxtemp)
+        else if(val>=maxval)
         {
             //If was on
             if(this->status==1)
@@ -154,7 +159,7 @@ unsigned short ControlOnOff::adaptiveUpdate(float temp)
 
         }
         else this->nextdelay=0;
-          
+
         return 0;
     }
     else return 1;
@@ -211,15 +216,6 @@ float ControlOnOff::getTarget()
 }
 
 
-
-/** @brief DebugStatistic
- *
- * @todo: document this function
- */
-void ControlOnOff::DebugStatistic(char *dbgstr)
-{
-    sprintf(dbgstr,"%d,%d,%d",(int)this->stmedian,(int)this->stlow,(int)this->sthigh);
-}
 
 /** @brief setup
   *

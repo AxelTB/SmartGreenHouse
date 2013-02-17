@@ -1,3 +1,12 @@
+/*******************************************************************
+*                   ==SmartGreenHouse==
+*   Actuator Class
+*   Created: 17/02/2013
+*   Author:  Ax
+*   License:
+=====================================================================
+All actuators code goes there
+********************************************************************/
 #ifndef ACTUATORS_H
 #define ACTUATORS_H
 
@@ -36,9 +45,10 @@ private:
 
 
 };
-/** @brief update
+/** @brief Update actuators state
  *
- * @todo: document this function
+ * Update Actuators commands according to state of the system stored in the state variable according
+ * to the given Controls
  */
 int Actuators::update(State *state)
 {
@@ -86,7 +96,7 @@ int Actuators::update(State *state)
     //Update humidifier status
     digitalWrite(HUMPIN,state->humidifier);
 
-    
+
      if(ret==3)
      state->log(State::INFORMATION,"Humidifier Maximum uptime reached");
      else if(ret==-2)
@@ -111,9 +121,9 @@ int Actuators::update(State *state)
 
 }
 
-/** @brief setup
+/** @brief Setup Function
  *
- * @todo: document this function
+ * Contains all Actuators initializations and startup procedures.
  */
 int Actuators::setup()
 {
@@ -139,8 +149,8 @@ int Actuators::setup()
   tc.setup(HCDELTA,1200000,0,120000,70,0);
   tc.setTarget(HCTARGET);
 
-  //Timered version
-  cth=ControlTimer(600000,240000);
+  /* //Timered Humidifier version
+  cth=ControlTimer(600000,240000);*/
   ctof=ControlTimer(1800000,120000);
 
 }
