@@ -1,12 +1,12 @@
 /*******************************************************************
-*                   ==SmartGreenHouse==
-*   Actuator Class
-*   Created: 17/02/2013
-*   Author:  Ax
-*   License:
-*=====================================================================
-*All actuators code goes there
-********************************************************************/
+ *                   ==SmartGreenHouse==
+ *   Actuator Class
+ *   Created: 17/02/2013
+ *   Author:  Ax
+ *   License:
+ *=====================================================================
+ *All actuators code goes there
+ ********************************************************************/
 #ifndef ACTUATORS_H
 #define ACTUATORS_H
 
@@ -19,12 +19,6 @@
 #define HEATCABLEPIN 4
 #define OUTFPIN   10
 
-
-
-
-#define TDELTA 8
-
-#define HDELTA 10
 
 #define HCDELTA 4
 
@@ -56,11 +50,11 @@ int Actuators::update(State *state)
   state->eactuators=0;
   //Update actuator target-------------------------------------------------------
   //TODO: Avoid update if target not changed
-  t.setTarget(state->tTemp); //Set heater target
-  tc.setTarget(state->tTemp);    //Set heat Cable target
-  h.setTarget(state->tHum); //Set humidifier target
-  
-  
+  t.setTarget(state->tTempc); //Set heater target
+  tc.setTarget(state->tTempc+state->tTempd/2);    //Set heat Cable target
+  h.setTarget(state->tHumc); //Set humidifier target
+
+
   //Verify DHT11 state--------------------------------------------------------------------------------
   //If sensoor major error
   if(state->esensors&State::ESENS_DHT11ERR)
@@ -104,24 +98,24 @@ int Actuators::update(State *state)
     digitalWrite(HUMPIN,state->humidifier);
 
 
-     if(ret==3)
-     state->log(State::INFORMATION,"Humidifier Maximum uptime reached");
-     else if(ret==-2)
-     {
-     state->eactuators=State::ESENS_HOUTOFBOUND;
-     state->log(State::ERROR,"Humidity out of bound");
-     }
+    if(ret==3)
+      state->log(State::INFORMATION,"Humidifier Maximum uptime reached");
+    else if(ret==-2)
+    {
+      state->eactuators=State::ESENS_HOUTOFBOUND;
+      state->log(State::ERROR,"Humidity out of bound");
+    }
 
 
   }
   /*
   //Humidifier timered version
-  state->humidifier=cth.update(millis());
-  if(state->level)
-    digitalWrite(HUMPIN,state->humidifier);
-  else
-    digitalWrite(HUMPIN,LOW);
-    */
+   state->humidifier=cth.update(millis());
+   if(state->level)
+   digitalWrite(HUMPIN,state->humidifier);
+   else
+   digitalWrite(HUMPIN,LOW);
+   */
   //Fresh Air Cicle-------------------------------------------------------------
   state->outFan=ctof.update(millis())*255;
   analogWrite(OUTFPIN,(int) state->outFan);
@@ -147,24 +141,26 @@ int Actuators::setup()
   digitalWrite(HUMPIN,LOW);
   digitalWrite(HEATCABLEPIN,LOW);
   t.setup(TDELTA,300000,60000,240000,60,0);//Set temperature maximum variation around target
-  
 
- //Controlled  hu,idifierversion
-   	h.setup(HDELTA,0,0,0,90,10); //Set humidity maximum variation around target
-   	
- //Timered humidifier version
+
+  //Controlled  hu,idifierversion
+  h.setup(HDELTA,0,0,0,90,10); //Set humidity maximum variation around target
+
+  //Heat cable
   tc.setup(HCDELTA,1200000,0,120000,70,0);
-  
+
 
   /* //Timered Humidifier version
-  cth=ControlTimer(600000,240000);*/
-  ctof=ControlTimer(1800000,120000);
+   cth=ControlTimer(600000,240000);*/
+  //Out fan control 1.5 Minute every 15 min
+  ctof=ControlTimer(900000,90000);
 
 }
 
 
 
 #endif // ACTUATORS_H
+
 
 
 

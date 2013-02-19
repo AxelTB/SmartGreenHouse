@@ -1,10 +1,15 @@
 #include <dht11.h>
 
-/***
- * SmartGreenHouse
- *
- * Author: Axxx
- */
+/*******************************************************************
+ *                   ==SmartGreenHouse==
+ *   Main sketch
+ *   Created: 17/02/2013
+ *   Author:  Ax
+ *   License: CC BY-SA 3.0 
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+ * All available documentation on https://github.com/AxelTB/SmartGreenHouse
+ ********************************************************************/
 
 #include <SD.h>
 #include <Wire.h>
