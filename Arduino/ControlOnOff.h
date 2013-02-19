@@ -3,8 +3,9 @@
 *   Control On/Off Class
 *   Created: 17/02/2013
 *   Author:  Ax
-*   License:
-=====================================================================
+ *   License: CC BY-SA 3.0 
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
 Control Class for digital actuators
 Activate an actuator if a state condition is below the target. Implements histeresys, Max On Time and minimum transition time separately.
 ********************************************************************/

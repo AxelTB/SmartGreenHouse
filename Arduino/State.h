@@ -1,3 +1,14 @@
+/*******************************************************************
+ *                   ==SmartGreenHouse==
+ *   State
+ *   Created: 17/02/2013
+ *   Author:  Ax
+ *   License: CC BY-SA 3.0 
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+ * State
+ * Contains state variable, target and actuator state. 
+ ********************************************************************/
 #ifndef STATE_H
 #define STATE_H
 
@@ -73,7 +84,7 @@ int State::setup(short sdpin)
   this->heaterCable=0;
   this->humidifier=0;
   this->outFan=255;
-  
+
   this->tTempc=TTEMP;
   this->tTempd=TDELTA;
   this->tHumc=THUM;
@@ -170,5 +181,6 @@ int State::log(byte level,char *data)
   return 0;
 }
 #endif // STATE_H
+
 
 
