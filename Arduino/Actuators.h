@@ -144,8 +144,8 @@ int Actuators::setup()
   t.setup(TDELTA,300000,60000,240000,60,0);//Set temperature maximum variation around target
 
 
-  //Controlled  hu,idifierversion
-  h.setup(HDELTA,0,0,0,90,10); //Set humidity maximum variation around target
+  //Controlled  humidifierversion
+  h.setup(HDELTA,600000,120000,120000,90,10); //Set humidity maximum variation around target
 
   //Heat cable
   tc.setup(HCDELTA,1200000,0,120000,70,0);
