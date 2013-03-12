@@ -13,7 +13,7 @@
 #define STATE_H
 
 #include <SD.h>
-#define LOOPT 1 //Loop Time
+#define LOOPT 2 //Loop Time
 #define SDPIN 9 //ALSO 11,12 and 13
 //Undefine to disable serial
 #define SERIALOUT
