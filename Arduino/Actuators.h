@@ -154,7 +154,7 @@ int Actuators::setup()
    //Timered Humidifier version
    cth=ControlTimer(600000,240000);
   //Out fan control 1.5 Minute every 15 min
-  //ctof=ControlTimer(900000,90000);
+  ctof=ControlTimer(900000,90000);
 
 }
 
