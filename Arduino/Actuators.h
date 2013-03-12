@@ -3,7 +3,7 @@
  *   Actuator Class
  *   Created: 17/02/2013
  *   Author:  Ax
- *   License: CC BY-SA 3.0 
+ *   License: CC BY-SA 3.0
  *            http://creativecommons.org/licenses/by-sa/3.0/
  *=====================================================================
  *All actuators code goes there
@@ -87,36 +87,36 @@ int Actuators::update(State *state)
       state->heaterCable=tc.getStatus();
       digitalWrite(HEATCABLEPIN,state->heaterCable);
     }
-    //Controlled version
-    //Humidity------------------------------------------------------
-    //If water level is not good shut down humidifier
-    if(state->level==0)
-      state->humidifier=0;
-    //or evaluate status
-    else if(  (ret=h.updateStatus(state->humidity))>=0)
-      state->humidifier=h.getStatus();
-    //Update humidifier status
-    digitalWrite(HUMPIN,state->humidifier);
-
-
-    if(ret==3)
-      state->log(State::INFORMATION,"Humidifier Maximum uptime reached");
-    else if(ret==-2)
-    {
-      state->eactuators=State::ESENS_HOUTOFBOUND;
-      state->log(State::ERROR,"Humidity out of bound");
-    }
-
-
+    /* //Controlled version
+     //Humidity------------------------------------------------------
+     //If water level is not good shut down humidifier
+     if(state->level==0)
+     state->humidifier=0;
+     //or evaluate status
+     else if(  (ret=h.updateStatus(state->humidity))>=0)
+     state->humidifier=h.getStatus();
+     //Update humidifier status
+     digitalWrite(HUMPIN,state->humidifier);
+     
+     
+     if(ret==3)
+     state->log(State::INFORMATION,"Humidifier Maximum uptime reached");
+     else if(ret==-2)
+     {
+     state->eactuators=State::ESENS_HOUTOFBOUND;
+     state->log(State::ERROR,"Humidity out of bound");
+     }
+     
+     */
   }
-  /*
+
   //Humidifier timered version
-   state->humidifier=cth.update(millis());
-   if(state->level)
-   digitalWrite(HUMPIN,state->humidifier);
-   else
-   digitalWrite(HUMPIN,LOW);
-   */
+  state->humidifier=cth.update(millis());
+  if(state->level)
+    digitalWrite(HUMPIN,state->humidifier);
+  else
+    digitalWrite(HUMPIN,LOW);
+
   //Fresh Air Cicle-------------------------------------------------------------
   state->outFan=ctof.update(millis())*255;
   analogWrite(OUTFPIN,(int) state->outFan);
@@ -145,7 +145,7 @@ int Actuators::setup()
 
 
   //Controlled  humidifierversion
-  h.setup(HDELTA,600000,120000,120000,90,10); //Set humidity maximum variation around target
+  h.setup(HDELTA,600000,120000,120000,90,10); //MaxOnTime=10min MinOnTime=2min MinOffTime=2min
 
   //Heat cable
   tc.setup(HCDELTA,1200000,0,120000,70,0);
@@ -161,6 +161,7 @@ int Actuators::setup()
 
 
 #endif // ACTUATORS_H
+
 
 
 

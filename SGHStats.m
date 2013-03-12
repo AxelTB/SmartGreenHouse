@@ -1,16 +1,20 @@
-function [ HeaterOnTime ] = SGHStats( file )
+%function [ HeaterOnTime ] = SGHStats( file )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
-data=load(file);
+file='../SmartGreenHouse_data/last/Temp16';
+%data=load(file);
 
 fantocmph=16/(0.589*255);
 
 
 pend=length(data);
 pstart=1;
+% pstart=6*24*3600/2;
+% pend=7*24*3600/2;
+time=(pstart:pend)/3600*2;
 
-time=(pstart:pend)/3600;
+%time=6*3600
 temp=data(pstart:pend,1);
 heat=data(pstart:pend,2);
 humidity=data(pstart:pend,3);
@@ -79,18 +83,19 @@ start=0;
 i=1;dhactive=0;
 while i*24<length(hhactive)
     datawindow=(i-1)*24+1:i*24;
-dhactive(i)=sum(hhactive(datawindow))/24;
+dhactive(i)=sum(hhactive(datawindow));
 i=i+1;
 end
-figure('Name','Daily Stats','NumberTitle','off')
+figure('Name','Daily Heater On Time','NumberTitle','off')
 bar(dhactive)
+
 %Text statistic
 HeaterOnTime=sum(htemp(:,2))/100
 
 
 %%Data
 %1. temp
-%2. heater
+%2. heatercl
 %3. humidity
 %4. humidifier
 %5. heatcable
@@ -99,5 +104,5 @@ HeaterOnTime=sum(htemp(:,2))/100
 %8. fhumidity
 %9. outfan
 
-end
+%end
 
