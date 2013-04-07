@@ -2,8 +2,8 @@
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
-file='../SmartGreenHouse_data/last/Temp16';
-%data=load(file);
+file='../SmartGreenHouse_data/last/Temp17';
+data=load(file);
 
 fantocmph=16/(0.589*255);
 
