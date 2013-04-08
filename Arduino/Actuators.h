@@ -115,6 +115,7 @@ int Actuators::update(State *state)
     digitalWrite(HUMPIN,state->humidifier);
   else
     digitalWrite(HUMPIN,LOW);
+    
   //Simple temperature control
   if(state->temp>27)
     outFan.setSpeed(255);

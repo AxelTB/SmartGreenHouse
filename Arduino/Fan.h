@@ -25,7 +25,7 @@ public:
     Everyting below minCommand will be 0 (To avoid fan noise), everything greather than maxCommand will be MaxCommand
     **/
     void setup(uint8_t pin,uint16_t minCommand,uint16_t maxCommand);
-    void setup(uint8_t pin,uint16_t minCommand,uint16_t maxCommand,long cicleTSec,long airflowTarget);
+    void setup(uint8_t pin,uint16_t minCommand,uint16_t maxCommand,float cicleTSec,float airflowTarget);
 
     /*** Set fan speed
     command -> 0-100 set fan percentage
@@ -41,7 +41,7 @@ private:
     uint8_t pin; //Fan pin
     uint16_t minCommand,maxCommand; //Maximum and minimum command available
     float KCommand;
-    long cicleTSec,airflowTarget; //Fresh air control variables
+    long cicleTms,airflowTarget; //Fresh air control variables
     long cicleStart, airflowSum;  //Freash air cicle temporary variables
     long lastCallTms;
 
@@ -64,7 +64,7 @@ uint8_t Fan::setSpeed(uint8_t command)
         //Evaluate command
         tpwm=(this->KCommand)*command;
 
-    if(this->cicleTSec>0)
+    if(this->cicleTms>0)
     {
         float dts=((float)millis()-this->lastCallTms)/1000;
         this->lastCallTms=millis();
@@ -72,14 +72,14 @@ uint8_t Fan::setSpeed(uint8_t command)
         this->airflowSum+=(float) this->pwm*dts;
 
         //Define minimum value to respect parameters (Linear way)+1
-        minPwm=(float) (this->airflowTarget-this->airflowSum)/(this->cicleTSec-(millis()-this->cicleStart)/1000)+1;
+        minPwm=(float) (this->airflowTarget-this->airflowSum)/(this->cicleTms-(millis()-this->cicleStart))+1;
 
         //Suppress if less than minimum command
         if(minPwm<this->minCommand)
             minPwm=0;
 
         //If period elapsed
-        if(((float)millis()-this->cicleStart)/1000.0>this->cicleTSec)
+        if( (millis()-this->cicleStart) > this->cicleTms)
         {
             //Evaluate difference between target and reality
             long error=this->airflowTarget-this->airflowSum;
@@ -107,12 +107,13 @@ uint8_t Fan::setSpeed(uint8_t command)
   *
   * @todo: document this function
   */
-void Fan::setup(uint8_t pin,uint16_t minCommand,uint16_t maxCommand,long cicleTSec,long airflowTarget)
+void Fan::setup(uint8_t pin,uint16_t minCommand,uint16_t maxCommand,float cicleTSec,float airflowTarget)
 {
     setup(pin,minCommand,maxCommand);
 
-    this->cicleTSec=cicleTSec;
-    this->airflowTarget=airflowTarget;
+//Convert from s to ms
+    this->cicleTms=cicleTSec*1000;
+    this->airflowTarget=airflowTarget*1000;
 
     this->airflowSum=0;
     this->cicleStart=millis();
@@ -134,7 +135,7 @@ void Fan::setup(uint8_t pin,uint16_t minCommand,uint16_t maxCommand)
     this->maxCommand=maxCommand;
     this->KCommand=(float)(maxCommand-minCommand)/100;
 
-    this->cicleTSec=0;
+    this->cicleTms=0;
 }
 
 
