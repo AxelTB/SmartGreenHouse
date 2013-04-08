@@ -38,6 +38,10 @@ public:
     Returns fan output raw
     */
     uint8_t setSpeed(uint8_t command);
+
+    /*** Fan stop
+    Stop the fan don't regarding air changing cicle */
+    void stop();
 protected:
 private:
     uint8_t pin; //Fan pin
@@ -82,12 +86,12 @@ Serial.print(this->airflowSum);
   Serial.print("->");
   Serial.print(this->airflowTarget);
   Serial.print("\t");
-  
+
   Serial.print(millis()-this->cicleStart);
   Serial.print("->");
   Serial.print(this->cicleTms);
   Serial.print("\t");
-  
+
   Serial.print(command);
   Serial.print("->");
   Serial.print(tpwm);
@@ -162,6 +166,16 @@ void Fan::setup(uint8_t pin,uint16_t minCommand,uint16_t maxCommand)
     this->KCommand=(float)(maxCommand-minCommand)/100;
 
     this->cicleTms=0;
+}
+
+/** @brief stop
+  *
+  * @todo: document this function
+  */
+void Fan::stop()
+{
+    this->pwm=0;
+    analogWrite(pin,pwm);
 }
 
 

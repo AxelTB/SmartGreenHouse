@@ -1,5 +1,4 @@
 
-
 /*******************************************************************
 *                   ==SmartGreenHouse==
 *   Sensors Class
@@ -19,7 +18,7 @@ Contains all sensor procedure to update state variable
 #include "State.h"
 #include <DHT.h>
 
-#define DHT11PIN 8
+#define DHTPIN 8
 #define LEVELPIN 5
 #define LIGHTAPIN 0
 
@@ -30,34 +29,34 @@ Contains all sensor procedure to update state variable
 #define DHT11MAXERRN 5
 class Sensors
 {
- //To be used with noisy input
-  class LowPassFilter
-  {
-public:
+//To be used with noisy input
+    class LowPassFilter
+    {
+    public:
 //Pole tau and dt setting. dt_s is LOOPT and tau_s must be tuned for the
-    void setup(float tau_s)
-    {
-      this->a=tau_s/(tau_s+LOOPT);
-    }
-    float update(float value)
-    {
-      this->sum*=1-a;
-      this->sum+=a*value;
+        void setup(float tau_s)
+        {
+            this->a=tau_s/(tau_s+LOOPT);
+        }
+        float update(float value)
+        {
+            this->sum*=1-a;
+            this->sum+=a*value;
 
-      return this->sum;
-    }
-    float a;
-    float sum;
-  };
+            return this->sum;
+        }
+        float a;
+        float sum;
+    };
 public:
-  int setup();
-  //Update status with measured data
-  int update(State *state);
+    int setup();
+    //Update status with measured data
+    int update(State *state);
 protected:
 private:
-  DHT dht;
-  unsigned short dht11errN;
-  LowPassFilter lplight,lphumidity;
+    DHT dht;
+    unsigned short dht11errN;
+    LowPassFilter lplight,lphumidity;
 
 };
 /** @brief update
@@ -66,40 +65,45 @@ private:
  */
 int Sensors::update(State *state)
 {
-  //Read temperature and humudity and store it in state-----------------
-  if(DHT11.read(DHT11PIN)==DHTLIB_OK)
-  {
-    //Clear DHT11 Error (If present)
-    state->esensors&=!(State::ESENS_DHT11ERR);
-    //Update temperature & humidity
-    state->temp=DHT11.temperature;
-    state->humidity=DHT11.humidity;
-    //Set error number to 0
-    this->dht11errN=0;
-  }
-  else
-  {
-    //If dht11 failed for too many times consecutively
-    if((++this->dht11errN)>DHT11MAXERRN)
+    //Read temperature and humudity and store it in state variable-----------------
+    float h = dht.readHumidity();
+    float t = dht.readTemperature();
+
+//If some error occurred
+    if ((isnan(t) || isnan(h))
     {
-      state->esensors|=State::ESENS_DHT11ERR;
-      state->log(State::CRITICAL,"Dht11 major error");
+        //If dht11 failed for too many times consecutively
+        if((++this->dht11errN)>DHT11MAXERRN)
+        {
+            state->esensors|=State::ESENS_DHT11ERR;
+            state->log(State::CRITICAL,"Dht11 major error");
+        }
+        else
+            state->log(State::ERROR,"Dht11 minor error");
     }
     else
-      state->log(State::ERROR,"Dht11 minor error");
-  }
-  //Set level according to level sensor----------------------------------
-  if(!(digitalRead(LEVELPIN)==GOODLEVEL) && state->level)
-  {
-    //Level just went low
-    state->log(State::ERROR,"Low Water level");
-  }
-  state->level=(digitalRead(LEVELPIN)==GOODLEVEL);
-  //Read Light sensor----------------------------------------------------
-  state->light=analogRead(LIGHTAPIN);
-  //Filtered variables
-  state->flight=this->lplight.update(state->light);
-  state->fhumidity=this->lphumidity.update(state->humidity);
+    {
+        //Clear DHT11 Error (If present)
+        state->esensors&=!(State::ESENS_DHT11ERR);
+        //Update temperature & humidity
+        state->temp=t;
+        state->humidity=h;
+
+        //Set error count to 0
+        this->dht11errN=0;
+    }
+    //Set level according to level sensor----------------------------------
+    if(!(digitalRead(LEVELPIN)==GOODLEVEL) && state->level)
+    {
+        //Level just went low
+        state->log(State::ERROR,"Low Water level");
+    }
+    state->level=(digitalRead(LEVELPIN)==GOODLEVEL);
+    //Read Light sensor----------------------------------------------------
+    state->light=analogRead(LIGHTAPIN);
+    //Filtered variables
+    state->flight=this->lplight.update(state->light);
+    state->fhumidity=this->lphumidity.update(state->humidity);
 }
 
 /** @brief setup
@@ -108,12 +112,15 @@ int Sensors::update(State *state)
  */
 int Sensors::setup()
 {
-  pinMode(LEVELPIN,INPUT);
-  //Set error number to 0
-  this->dht11errN=0;
-  //Filter definition
-  this->lplight.setup(LIGHTTAU);
-  this->lphumidity.setup(HUMIDITYTAU);
+    pinMode(LEVELPIN,INPUT);
+
+    //Set error number to 0
+    this->dht11errN=0;
+    this->dht=DHT(DHTPIN,DHT11);
+    this->dht.begin();
+    //Filter definition
+    this->lplight.setup(LIGHTTAU);
+    this->lphumidity.setup(HUMIDITYTAU);
 
 }
 

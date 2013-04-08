@@ -56,15 +56,19 @@ int Actuators::update(State *state)
 
 
   //Verify DHT11 state--------------------------------------------------------------------------------
-  //If sensoor major error
+  //If sensor major error occurred
   if(state->esensors&State::ESENS_DHT11ERR)
   {
+      ///Emergency suspend function=================================================================
     //Shut down both heater and humidifier
     digitalWrite(HEATPIN,0);
     digitalWrite(HEATCABLEPIN,0);
     digitalWrite(HUMPIN,0);
+    //Stop Fan
+    this->outFan.stop();
     //Add log
     state->log(State::CRITICAL,"DHT11 Major error. Shutting down all actuators");
+    ///=============================================================================================
   }
   //----------------------------------------------------------------------------------------------------
   else
@@ -96,8 +100,8 @@ int Actuators::update(State *state)
      state->humidifier=h.getStatus();
      //Update humidifier status
      digitalWrite(HUMPIN,state->humidifier);
-     
-     
+
+
      if(ret==3)
      state->log(State::INFORMATION,"Humidifier Maximum uptime reached");
      else if(ret==-2)
@@ -105,7 +109,7 @@ int Actuators::update(State *state)
      state->eactuators=State::ESENS_HOUTOFBOUND;
      state->log(State::ERROR,"Humidity out of bound");
      }
-     
+
      */
   }
 
@@ -115,8 +119,8 @@ int Actuators::update(State *state)
     digitalWrite(HUMPIN,state->humidifier);
   else
     digitalWrite(HUMPIN,LOW);
-    
-    
+
+
   if(state->temp>27)
     state->outFan=outFan.setSpeed(255);
   else

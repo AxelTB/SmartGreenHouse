@@ -2,7 +2,7 @@
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
-file='../SmartGreenHouse_data/last/Temp17';
+file='../SmartGreenHouse_data/last/Temp18';
 data=load(file);
 
 fantocmph=16/(0.589*255);
@@ -27,10 +27,14 @@ outf=data(pstart:pend,9);
 %%%Caos
 figure('Name','Temperature evolution','NumberTitle','off')
 plot(time,temp,'g',time,heat.*10+15,'r',time,outf./20+15,'b')
+legend('Temperature', 'Heater', 'Fan');
+xlabel('Time (h)')
+
+
 figure('Name','Humidity evol','NumberTitle','off')
 plot(time,humidity./100,'g',time,humidifier,'r',time,outf./255,'b')
-
-
+legend('Humidity', 'Humidifier', 'Fan');
+xlabel('Time (h)')
 
 %%%Hourly statistics
 hactive=sum(heat)/pend*100;
@@ -49,7 +53,7 @@ while i*3600+pstart<pend
     i=i+1;
 end
 htime=1:(i-1);
-figure('Name','Heater','NumberTitle','off')
+figure('Name','Heater Hourly Statistic','NumberTitle','off')
 subplot(2,1,1)
 bar(hhactive,'r')
 title('Heater active percentage')
@@ -57,7 +61,7 @@ subplot(2,1,2)
 bar(hhcable)
 title('Heat cable on time')
 
-figure('Name','Other actuators','NumberTitle','off')
+figure('Name','Other actuators Hourly Statistic','NumberTitle','off')
 subplot(2,1,1)
 bar(hhumidity)
 title('Humidifier active percentage')
