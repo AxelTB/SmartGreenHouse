@@ -134,7 +134,8 @@ int Actuators::setup()
   pinMode(HUMPIN,OUTPUT);  //Humidifier pin
   pinMode(HEATCABLEPIN,OUTPUT);
 
-  outFan.setup(OUTFPIN,70,255);
+  //Half speed for all eternity
+  outFan.setup(OUTFPIN,70,255,600,72000);
 
 
   digitalWrite(HEATPIN,LOW);
