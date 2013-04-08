@@ -33,9 +33,8 @@ protected:
 private:
   unsigned short heatpin,humpin;
   ControlOnOff t,h,tc;
-  ControlTimer cth,ctof;
-
-  long outftime;
+  ControlTimer cth;
+  Fan outFan;
 
 
 
@@ -116,10 +115,11 @@ int Actuators::update(State *state)
     digitalWrite(HUMPIN,state->humidifier);
   else
     digitalWrite(HUMPIN,LOW);
-
-  //Fresh Air Cicle-------------------------------------------------------------
-  state->outFan=ctof.update(millis())*255;
-  analogWrite(OUTFPIN,(int) state->outFan);
+  //Simple temperature control
+  if(state->temp>27)
+    outFan.setSpeed(255);
+  else
+    outFan.setSpeed(0);
 
 }
 
@@ -132,10 +132,8 @@ int Actuators::setup()
   pinMode(HEATPIN,OUTPUT); //Set Heater pin
   pinMode(HUMPIN,OUTPUT);  //Humidifier pin
   pinMode(HEATCABLEPIN,OUTPUT);
-  pinMode(OUTFPIN,OUTPUT);
 
-  digitalWrite(OUTFPIN,255);
-  outftime=millis();
+  outFan.setup(OUTFPIN,70,255);
 
 
   digitalWrite(HEATPIN,LOW);
@@ -145,22 +143,21 @@ int Actuators::setup()
 
 
   //Controlled  humidifierversion
-  h.setup(HDELTA,600000,120000,120000,90,10); //MaxOnTime=10min MinOnTime=2min MinOffTime=2min
+  //h.setup(HDELTA,600000,120000,120000,90,10); //MaxOnTime=10min MinOnTime=2min MinOffTime=2min
 
   //Heat cable
   tc.setup(HCDELTA,1200000,0,120000,70,0);
 
 
-   //Timered Humidifier version
-   cth=ControlTimer(600000,240000);
-  //Out fan control 1.5 Minute every 15 min
-  ctof=ControlTimer(900000,90000);
+  //Timered Humidifier version
+  cth=ControlTimer(600000,240000);
 
 }
 
 
 
 #endif // ACTUATORS_H
+
 
 
 
