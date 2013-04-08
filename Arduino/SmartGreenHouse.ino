@@ -54,6 +54,7 @@ void loop()
   state.saveStats();
   //Wait for looptime---------------------------------------------
   while(millis()-time<LOOPT*1000);
+  time=millis();
 }
 
 

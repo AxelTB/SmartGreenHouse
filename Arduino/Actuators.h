@@ -116,11 +116,11 @@ int Actuators::update(State *state)
   else
     digitalWrite(HUMPIN,LOW);
     
-  //Simple temperature control
+    
   if(state->temp>27)
-    outFan.setSpeed(255);
+    state->outFan=outFan.setSpeed(255);
   else
-    outFan.setSpeed(0);
+    state->outFan=outFan.setSpeed(0);
 
 }
 
@@ -134,8 +134,11 @@ int Actuators::setup()
   pinMode(HUMPIN,OUTPUT);  //Humidifier pin
   pinMode(HEATCABLEPIN,OUTPUT);
 
-  //Half speed for all eternity
-  outFan.setup(OUTFPIN,70,255,600,72000);
+//Fan 27 mq/h
+    //1 mq/20min = 30 pwm ->
+  //Simple temperature control
+
+  outFan.setup(OUTFPIN,45,255,600,18000);
 
 
   digitalWrite(HEATPIN,LOW);
