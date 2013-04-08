@@ -1,4 +1,6 @@
-#include <dht11.h>
+#include <DHT.h>
+
+
 #include "Fan.h"
 /*******************************************************************
  *                   ==SmartGreenHouse==

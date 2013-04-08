@@ -1,9 +1,11 @@
+
+
 /*******************************************************************
 *                   ==SmartGreenHouse==
 *   Sensors Class
 *   Created: 17/02/2013
 *   Author:  Ax
- *   License: CC BY-SA 3.0 
+ *   License: CC BY-SA 3.0
  *            http://creativecommons.org/licenses/by-sa/3.0/
  *=====================================================================
 Sensors Class
@@ -15,7 +17,7 @@ Contains all sensor procedure to update state variable
 #define SENSORS_H
 
 #include "State.h"
-#include <dht11.h>
+#include <DHT.h>
 
 #define DHT11PIN 8
 #define LEVELPIN 5
@@ -53,7 +55,7 @@ public:
   int update(State *state);
 protected:
 private:
-  dht11 DHT11;
+  DHT dht;
   unsigned short dht11errN;
   LowPassFilter lplight,lphumidity;
 
