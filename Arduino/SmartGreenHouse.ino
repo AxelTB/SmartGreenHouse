@@ -1,5 +1,5 @@
 #include <dht11.h>
-
+#include "Fan.h"
 /*******************************************************************
  *                   ==SmartGreenHouse==
  *   Main sketch
