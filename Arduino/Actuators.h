@@ -34,7 +34,7 @@ protected:
 private:
     unsigned short heatpin,humpin;
     ControlOnOff t,tc;
-#ifndef HUMCONTROLLER
+#ifndef HUMCONTROLLED
     ControlTimer cth;
 #else
     ControlOnOff h;
@@ -57,7 +57,7 @@ int Actuators::update(State *state)
     //TODO: Avoid update if target not changed
     t.setTarget(state->tTempc); //Set heater target
     tc.setTarget(state->tTempc+state->tTempd/2);    //Set heat Cable target
-#ifdef HUMCONTROLLER
+#ifdef HUMCONTROLLED
     h.setTarget(state->tHumc); //Set humidifier target
 #endif
 
@@ -73,7 +73,7 @@ int Actuators::update(State *state)
         //Stop Fan
         this->outFan.stop();
         //Add log
-        state->log(State::CRITICAL,"DHT11 Major error. Shutting down all actuators");
+        state->log(State::CRITICAL,"DHT Major error. Shutting down all actuators");
         ///=============================================================================================
     }
     //----------------------------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ int Actuators::update(State *state)
             state->heaterCable=tc.getStatus();
             digitalWrite(HEATCABLEPIN,state->heaterCable);
         }
-#ifdef HUMCONTROLLER
+#ifdef HUMCONTROLLED
         //Humidity------------------------------------------------------
         //If water level is not good shut down humidifier
         if(state->level==0)
@@ -118,18 +118,27 @@ int Actuators::update(State *state)
 
 #endif
     }
-#ifndef HUMCONTROLLER
+#ifndef HUMCONTROLLED
     //Humidifier timered version
     state->humidifier=cth.update(millis());
     if(!state->level)
         state->humidifier=0;
     digitalWrite(HUMPIN,state->humidifier);
 #endif
-
+    //Full power if > 30°
     if(state->temp>30)
         state->outFan=outFan.setSpeed(255);
     else
+    {
+      //Evaluate distance from higher point
+      float ferror=state->temp-(state->tTempc+state->tTempd/2);
+      float kc=30;
+      
+      if(ferror>0)
+        state->outFan=outFan.setSpeed(kc*ferror);
+      else
         state->outFan=outFan.setSpeed(0);
+    }
 
 }
 
@@ -155,9 +164,9 @@ int Actuators::setup()
     digitalWrite(HEATCABLEPIN,LOW);
     t.setup(TDELTA,300000,60000,240000,60,0);//Set temperature maximum variation around target
 
-#ifdef HUMCONTROLLER
+#ifdef HUMCONTROLLED
     //Controlled  humidifierversion
-    h.setup(HDELTA,600000,120000,120000,90,10); //MaxOnTime=10min MinOnTime=2min MinOffTime=2min
+    h.setup(HDELTA,600000,60000,300000,90,10); //MaxOnTime=10min MinOnTime=1min MinOffTime=5min
 #else
     //Timered Humidifier version
     cth=ControlTimer(600000,240000);
