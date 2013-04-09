@@ -55,7 +55,7 @@ public:
 protected:
 private:
     DHT dht;
-    unsigned short dht11errN;
+    unsigned short dhterrN;
     LowPassFilter lplight,lphumidity;
 
 };
@@ -70,10 +70,10 @@ int Sensors::update(State *state)
     float t = dht.readTemperature();
 
 //If some error occurred
-    if ((isnan(t) || isnan(h))
+    if (isnan(t) || isnan(h))
     {
         //If dht11 failed for too many times consecutively
-        if((++this->dht11errN)>DHT11MAXERRN)
+        if((++this->dhterrN)>DHT11MAXERRN)
         {
             state->esensors|=State::ESENS_DHT11ERR;
             state->log(State::CRITICAL,"Dht11 major error");
@@ -90,7 +90,7 @@ int Sensors::update(State *state)
         state->humidity=h;
 
         //Set error count to 0
-        this->dht11errN=0;
+        this->dhterrN=0;
     }
     //Set level according to level sensor----------------------------------
     if(!(digitalRead(LEVELPIN)==GOODLEVEL) && state->level)
@@ -115,8 +115,8 @@ int Sensors::setup()
     pinMode(LEVELPIN,INPUT);
 
     //Set error number to 0
-    this->dht11errN=0;
-    this->dht=DHT(DHTPIN,DHT11);
+    this->dhterrN=0;
+    this->dht=DHT(DHTPIN,DHT22);
     this->dht.begin();
     //Filter definition
     this->lplight.setup(LIGHTTAU);
