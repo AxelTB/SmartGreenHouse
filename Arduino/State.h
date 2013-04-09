@@ -53,7 +53,7 @@ public:
   int log(byte level,char *data);
 
   //Error flags for sensors---------------------------------------------------------------
-  static const byte ESENS_DHT11ERR=0b1;
+  static const byte ESENS_DHTERR=0b1;
   static const byte ESENS_TOUTOFBOUND=0b10;
   static const byte ESENS_HOUTOFBOUND=0b100;
   //static const byte ESENS_HOUTOFBOUND=0b100;

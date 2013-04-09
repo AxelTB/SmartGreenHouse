@@ -19,6 +19,8 @@ Contains all sensor procedure to update state variable
 #include <DHT.h>
 
 #define DHTPIN 8
+#define DHTTYPE DHT22
+
 #define LEVELPIN 5
 #define LIGHTAPIN 0
 
@@ -26,7 +28,7 @@ Contains all sensor procedure to update state variable
 #define HUMIDITYTAU 120
 
 #define GOODLEVEL HIGH
-#define DHT11MAXERRN 5
+#define DHTMAXERRN 5
 class Sensors
 {
 //To be used with noisy input
@@ -73,9 +75,9 @@ int Sensors::update(State *state)
     if (isnan(t) || isnan(h))
     {
         //If dht11 failed for too many times consecutively
-        if((++this->dhterrN)>DHT11MAXERRN)
+        if((++this->dhterrN)>DHTMAXERRN)
         {
-            state->esensors|=State::ESENS_DHT11ERR;
+            state->esensors|=State::ESENS_DHTERR;
             state->log(State::CRITICAL,"Dht11 major error");
         }
         else
@@ -84,7 +86,7 @@ int Sensors::update(State *state)
     else
     {
         //Clear DHT11 Error (If present)
-        state->esensors&=!(State::ESENS_DHT11ERR);
+        state->esensors&=!(State::ESENS_DHTERR);
         //Update temperature & humidity
         state->temp=t;
         state->humidity=h;
@@ -116,7 +118,7 @@ int Sensors::setup()
 
     //Set error number to 0
     this->dhterrN=0;
-    this->dht=DHT(DHTPIN,DHT22);
+    this->dht=DHT(DHTPIN,DHTTYPE);
     this->dht.begin();
     //Filter definition
     this->lplight.setup(LIGHTTAU);

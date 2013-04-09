@@ -57,7 +57,7 @@ int Actuators::update(State *state)
 
   //Verify DHT11 state--------------------------------------------------------------------------------
   //If sensor major error occurred
-  if(state->esensors&State::ESENS_DHT11ERR)
+  if(state->esensors&State::ESENS_DHTERR)
   {
       ///Emergency suspend function=================================================================
     //Shut down both heater and humidifier
