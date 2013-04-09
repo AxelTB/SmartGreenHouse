@@ -35,8 +35,8 @@ public:
   boolean heater,humidifier,heaterCable;
   unsigned short outFan;
   //State variable----------
-  float temp;
-  short humidity,light;
+  float temp,humidity;
+  short light;
   float fhumidity,flight;
   boolean level;
 
