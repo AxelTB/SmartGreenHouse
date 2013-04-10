@@ -2,7 +2,7 @@
 
 close all, clear all
 %file='../SmartGreenHouse_data/last/TotTemp';
-file='../SmartGreenHouse_data/last/Temp20';
+file='../SmartGreenHouse_data/last/Temp22';
 
 data=load(file);
 
@@ -28,8 +28,8 @@ outf=data(pstart:pend,9);
 %%%General state evolution-------------------------------------------------
 figure('Name','Sistem evolution','NumberTitle','off')
 axis(1)=subplot(2,1,1);
-plot(time,temp,'g',time,heat.*10+15,'r*')
-legend('Temperature', 'Heater');
+plot(time,temp,'g',time,heat.*10+15,'r*',time,hcable*10+20,'ob')
+legend('Temperature', 'Heater','Heat Cable');
 xlabel('Time (h)')
 axis(2)=subplot(2,1,2);
 plot(time,humidity./100,'g',time,humidifier,'b*',time,outf./255,'r')
