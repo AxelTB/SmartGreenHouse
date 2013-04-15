@@ -162,17 +162,17 @@ int Actuators::setup()
     digitalWrite(HEATPIN,LOW);
     digitalWrite(HUMPIN,LOW);
     digitalWrite(HEATCABLEPIN,LOW);
-    t.setup(TDELTA,300000,60000,240000,60,0);//Set temperature maximum variation around target
+    t.setup(TDELTA,300000,60000,240000,60,3);//Set temperature maximum variation around target
 
 #ifdef HUMCONTROLLED
     //Controlled  humidifierversion
-    h.setup(HDELTA,600000,60000,300000,90,10); //MaxOnTime=10min MinOnTime=1min MinOffTime=5min
+    h.setup(HDELTA,720000,60000,300000,90,10); //MaxOnTime=2h MinOnTime=1min MinOffTime=5min
 #else
     //Timered Humidifier version
     cth=ControlTimer(600000,240000);
 #endif
     //Heat cable
-    tc.setup(HCDELTA,1200000,0,120000,70,0);
+    tc.setup(HCDELTA,1200000,0,120000,60,3);
 
 
 

@@ -1,8 +1,8 @@
 %   SmartGreenHouse stat parser
 
 close all, clear all
-%file='../SmartGreenHouse_data/last/TotTemp';
-file='../SmartGreenHouse_data/last/Temp22';
+file='../SmartGreenHouse_data/last/TotTemp';
+%file='../SmartGreenHouse_data/last/Temp23';
 
 data=load(file);
 
@@ -32,7 +32,7 @@ plot(time,temp,'g',time,heat.*10+15,'r*',time,hcable*10+20,'ob')
 legend('Temperature', 'Heater','Heat Cable');
 xlabel('Time (h)')
 axis(2)=subplot(2,1,2);
-plot(time,humidity./100,'g',time,humidifier,'b*',time,outf./255,'r')
+plot(time,humidity./100,'g',time,humidifier,'b*',time,outf./255,'r*')
 legend('Humidity', 'Humidifier', 'Fan');
 xlabel('Time (h)')
 linkaxes(axis, 'x');
