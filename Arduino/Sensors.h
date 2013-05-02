@@ -19,7 +19,7 @@ Contains all sensor procedure to update state variable
 #include <DHT.h>
 
 #define DHTPIN 8
-#define DHTTYPE DHT22
+#define DHTTYPE DHT11
 
 #define LEVELPIN 5
 #define LIGHTAPIN 0
