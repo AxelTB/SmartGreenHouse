@@ -1,6 +1,6 @@
 #ifndef DIGITALOUT_H
 #define DIGITALOUT_H
-
+#include "Time.h"
 /*******************************************************************
  *                   ==SmartGreenHouse==
  *   Digital Output Class
