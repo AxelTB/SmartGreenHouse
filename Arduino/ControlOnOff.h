@@ -3,7 +3,7 @@
 *   Control On/Off Class
 *   Created: 17/02/2013
 *   Author:  Ax
- *   License: CC BY-SA 3.0 
+ *   License: CC BY-SA 3.0
  *            http://creativecommons.org/licenses/by-sa/3.0/
  *=====================================================================
 Control Class for digital actuators
@@ -28,7 +28,7 @@ class ControlOnOff
 {
 public:
     void setup(unsigned short delta);
-    void setup(unsigned short delta,unsigned long MaxOnTime,unsigned long MinOnTime,unsigned long MinOffTime,int HighBound,int LowBound);
+    void setup(unsigned short delta,int HighBound,int LowBound);
     int updateStatus(float val);
     unsigned short getStatus();
     void setTarget(float Target);
