@@ -1,6 +1,3 @@
-#ifndef DIGITALOUT_H
-#define DIGITALOUT_H
-#include "Time.h"
 /*******************************************************************
  *                   ==SmartGreenHouse==
  *   Digital Output Class
@@ -11,6 +8,13 @@
  *=====================================================================
  *All actuators code goes there
  ********************************************************************/
+
+#ifndef DIGITALOUT_H
+#define DIGITALOUT_H
+#include "Time.h"
+
+
+
 
 class DigitalOut
 {
@@ -23,8 +27,8 @@ MinOnTimeS -> Min On sec
 MinOffTimeS -> Min Off sec
 forcedOffS -> Time to wait when forced off before accept new command (For cooling or stuff like this)
 **/
-        int init(int pin);
-        int init(int pin,long MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MinOffTimeS);
+        int init(uint8_t pin);
+        int init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MinOffTimeS);
 
         int on();
         int off();
@@ -32,6 +36,7 @@ forcedOffS -> Time to wait when forced off before accept new command (For coolin
         int set(short value);
         int set(bool value);
     protected:
+        uint8_t pin;
 
     private:
 };
