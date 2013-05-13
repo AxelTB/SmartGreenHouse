@@ -8,6 +8,7 @@
  *=====================================================================
 Control Class for digital actuators
 Activate an actuator if a state condition is below the target. Implements histeresys, Max On Time and minimum transition time separately.
+Activate at target-delta/2 and stops at target+delta/2
 ********************************************************************/
 /*
 Day 21~23
@@ -29,7 +30,9 @@ class ControlOnOff
 public:
     ControlOnOff();
     ControlOnOff(short target,unsigned short delta);
-
+/***
+Targer variable and delta around them
+*/
     void setup(short target,unsigned short delta);
 
 //Update & return status

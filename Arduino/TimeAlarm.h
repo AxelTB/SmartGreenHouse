@@ -7,6 +7,7 @@
 class TimeAlarm : protected TimeCounter
 {
     public:
+        TimeAlarm();
         TimeAlarm(unsigned long timeoutms);
 
         void set(unsigned long timeoutms);

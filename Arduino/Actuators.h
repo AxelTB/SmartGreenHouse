@@ -51,6 +51,7 @@ private:
  */
 int Actuators::update(State *state)
 {
+    /*
     int ret;
     state->eactuators=0;
     //Update actuator target-------------------------------------------------------
@@ -133,13 +134,13 @@ int Actuators::update(State *state)
       //Evaluate distance from higher point
       float ferror=state->temp-(state->tTempc+state->tTempd/2);
       float kc=30;
-      
+
       if(ferror>0)
         state->outFan=outFan.setSpeed(kc*ferror);
       else
         state->outFan=outFan.setSpeed(0);
     }
-
+*/
 }
 
 /** @brief Setup Function
@@ -148,7 +149,7 @@ int Actuators::update(State *state)
  */
 int Actuators::setup()
 {
-    pinMode(HEATPIN,OUTPUT); //Set Heater pin
+ /*   pinMode(HEATPIN,OUTPUT); //Set Heater pin
     pinMode(HUMPIN,OUTPUT);  //Humidifier pin
     pinMode(HEATCABLEPIN,OUTPUT);
 
@@ -175,7 +176,7 @@ int Actuators::setup()
     tc.setup(HCDELTA,1200000,0,120000,60,3);
 
 
-
+*/
 }
 
 

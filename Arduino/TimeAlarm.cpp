@@ -2,7 +2,7 @@
 
 TimeAlarm::TimeAlarm()
 {
-    //ctor
+    this->timeout=(unsigned long)0xFFFFFFFF;
 }
 
 /** @brief isElapsed
