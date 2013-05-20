@@ -147,3 +147,19 @@ DigitalOut::DigitalOut()
 
 }
 
+
+/** @brief forceOff
+  *
+  * @todo: document this function
+  */
+void DigitalOut::forceOff()
+{
+    //Turn down no matter what
+    this->status=false;
+    digitalWrite(this->pin,this->status);
+
+    //Set minimum off time
+    this->timerMin.set(this->MinOffTime);
+    this->timerMax.kill(); //Kill maximum on time
+}
+

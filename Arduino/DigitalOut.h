@@ -39,6 +39,9 @@ public:
     bool set(uint8_t value);
     inline bool set(bool value);
     bool get();
+
+//Emergency routine
+    void forceOff();
 protected:
     uint8_t pin;
     bool status;

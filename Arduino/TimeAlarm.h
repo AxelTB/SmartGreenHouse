@@ -13,9 +13,11 @@ class TimeAlarm : protected TimeCounter
         void set(unsigned long timeoutms);
         void reset();
         bool isElapsed();
+        void kill();
 
     protected:
         unsigned long timeout;
+        bool active;
     private:
 };
 
