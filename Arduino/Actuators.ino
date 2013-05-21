@@ -11,7 +11,7 @@ int Actuators::update(State *state)
     //Update actuator target (For dynamic update)-------------------------------------------------------
     t.setTarget(state->tTempc); //Set heater target
     tc.setTarget(state->tTempc+state->tTempd/2);    //Set heat Cable target
-
+	
 #ifdef HUMCONTROLLED
     h.setTarget(state->tHumc); //Set humidifier target
 #endif
@@ -40,6 +40,7 @@ int Actuators::update(State *state)
 
 //Heat Cable------------------------------------------------------
         state->heaterCable=this->heatcable.set(tc.update(state->temp));
+
 //Humidifier------------------------------------------------------
 #ifdef HUMCONTROLLED
         //If water level is not good shut down humidifier
