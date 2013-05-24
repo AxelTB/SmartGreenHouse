@@ -35,7 +35,6 @@ int Actuators::update(State *state)
     else
     {
 //Heater------------------------------------------------------------------------------------------------
-
         state->heater = this->heater.set(t.update(state->temp));
 
 //Heat Cable------------------------------------------------------
