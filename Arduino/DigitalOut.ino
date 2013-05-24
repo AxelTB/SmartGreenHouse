@@ -7,7 +7,8 @@ bool DigitalOut::set(bool value)
 {
     if(!this->timerMin.isElapsed()) //If minimum timer not elapsed
         return this->status; //Just return current status
-Serial.print(value);
+///****************DGB******************
+    Serial.print(value);
     if(value==this->status) //If command not changed
     {
         //Just check maximum timer
@@ -19,7 +20,7 @@ Serial.print(value);
     else
     {
 	Serial.println(":Switch");
-        if(value)
+        if(value==true)
         {
             this->timerMin.set(this->MinOnTime); //Set minimum On timer
             this->timerMax.set(this->MaxOnTime); //Set maximum On timer
@@ -102,10 +103,10 @@ bool DigitalOut::set(int value)
 int DigitalOut::init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MaxOffTimeS,unsigned long MinOffTimeS)
 {
     this->init(pin);
-    this->MaxOnTime=MaxOnTimeS;
-    this->MaxOnTime=MinOnTimeS;
-    this->MinOffTime=MinOffTimeS;
-    this->MaxOffTime=MaxOffTimeS;
+    this->MaxOnTime=MaxOnTimeS*1000;
+    this->MaxOnTime=MinOnTimeS*1000;
+    this->MinOffTime=MinOffTimeS*1000;
+    this->MaxOffTime=MaxOffTimeS*1000;
     return 0;
 
 }
@@ -114,6 +115,8 @@ int DigitalOut::init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,un
   *
   * @todo: document this function
   */
+  
+///!!!FIX: Maximum timer alwais switch if set to 0!!!!!!!!!!!!!!!!!!!
 int DigitalOut::init(uint8_t pin)
 {
     this->pin=pin;
