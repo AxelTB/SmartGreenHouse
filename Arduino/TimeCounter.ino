@@ -46,9 +46,10 @@ unsigned long TimeCounter::getElapsedMillis(unsigned long startms)
     //TODO: Maybe add something...
 
   }
-
-  //If everything worked fine
-  return startms-now;
+  else
+    //If everything worked fine
+    return now-startms;
 }
+
 
 
