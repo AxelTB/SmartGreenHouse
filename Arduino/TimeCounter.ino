@@ -7,18 +7,18 @@
 
 TimeCounter::TimeCounter()
 {
-    this->start=millis();
+  this->start=millis();
 }
 
 /** @brief getElapsedMillis
-  *
-  * returns time in milliseconds since last call
-  */
+ *
+ * returns time in milliseconds since last call
+ */
 unsigned long TimeCounter::getElapsedMillis()
 {
-    unsigned long ret=getElapsedMillis(this->start);
-    this->start=millis();
-    return ret;
+  unsigned long ret=getElapsedMillis(this->start);
+  this->start=millis();
+  return ret;
 
 }
 
@@ -26,27 +26,29 @@ unsigned long TimeCounter::getElapsedMillis()
 
 
 /** @brief getElapsedMillis Function
-  *
-  * @todo: get millis from start time
-  */
+ *
+ * @todo: get millis from start time
+ */
 unsigned long TimeCounter::getElapsedMillis(unsigned long startms)
 {
-    unsigned long now=millis();
-    if(startms>now) //Some error occurred
+  unsigned long now=millis();
+  if(startms>now) //Some error occurred
+  {
+    Serial.println("***TIME OVERFLOW***");
+    if(this->start>OVERFLOWEDGEHIGH && now<OVERFLOWEDGELOW)
     {
-        if(this->start>OVERFLOWEDGEHIGH && now<OVERFLOWEDGELOW)
-        {
-            //Overflow
-            return (MAXMILLIS-startms)+now;
-        }
-
-        //WTF?!? This should not happen... Just return 0 and forget this ever happened
-        return 0;
-        //TODO: Maybe add something...
-
+      //Overflow
+      return (MAXMILLIS-startms)+now;
     }
+    Serial.println("Grande Giove!");
+    //WTF?!? This should not happen... Just return 0 and forget this ever happened
+    return 0;
+    //TODO: Maybe add something...
 
-    //If everything worked fine
-    return startms-now;
+  }
+
+  //If everything worked fine
+  return startms-now;
 }
+
 

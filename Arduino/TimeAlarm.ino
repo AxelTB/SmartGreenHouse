@@ -6,7 +6,12 @@
   */
 bool TimeAlarm::isElapsed()
 {
-    if(active && getElapsedMillis(this->start)>this->timeout) //If timeout occurred & Timer active
+  ///*************DEBUG*********************
+  unsigned long dbgt=getElapsedMillis(this->start);
+  Serial.print("---");
+  Serial.print(dbgt);
+  Serial.println("---");
+    if(active && dbgt>this->timeout) //If timeout occurred & Timer active
         return true;
         else
     return false;
