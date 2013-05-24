@@ -19,7 +19,7 @@
 #define SERIALOUT
 
 //Target temperature and humidity
-#define TTEMP 23
+#define TTEMP 20
 #define TDELTA 8
 
 #define THUM  40
