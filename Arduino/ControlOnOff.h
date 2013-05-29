@@ -40,7 +40,7 @@ Targer variable and delta around them
     void setup(short target,unsigned short delta);
 
 //Update & return status
-    bool updateStatus(float val);
+    bool update(float val);
 //Get current status
     bool getStatus();
 

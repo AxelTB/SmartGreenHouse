@@ -94,20 +94,17 @@ int Actuators::setup()
 ///Heater 18°+-3
 //Humidifier 35+-10
 //Heat cable 25+-5
-  t.setup(6,60,3);//Set temperature maximum variation around target
-  t.setTarget(18); //Set heater target 
+  t.setup(18,6);//Set temperature maximum variation around target
 
 #ifdef HUMCONTROLLED
-  //Controlled  humidifierversion
-  h.setup(20,90,10);
-h.setTarget(35); //Set humidifier target
+  //Controlled  humidifier version
+  h.setup(35,20);
 #else
   //Timered Humidifier version
   cth=ControlTimer(600000,240000);
 #endif
   //Heat cable
-  tc.setup(10,60,3);
-  tc.setTarget(25);    //Set heat Cable target
+  tc.setup(25,10);
 
 
 }
