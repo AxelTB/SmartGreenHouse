@@ -1,7 +1,10 @@
+#ifndef CONTROLONOFF_H
+#define CONTROLONOFF_H
 /*******************************************************************
 *                   ==SmartGreenHouse==
 *   Control On/Off Class
 *   Created: 17/02/2013
+*   Last edit: 29/05/2013
 *   Author:  Ax
  *   License: CC BY-SA 3.0
  *            http://creativecommons.org/licenses/by-sa/3.0/
@@ -18,6 +21,7 @@ Day 21~23
 #define LOWBOUND 1
 #define HIGHBOUND 30
 
+#include <Arduino.h>
 #define MAXFAULT 10
 
 #define MAXONTIME  (300000l) //5 min
@@ -47,3 +51,5 @@ private:
     //Treesholds
     short min,max;
 };
+
+#endif

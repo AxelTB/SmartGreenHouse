@@ -18,19 +18,20 @@
 //Undefine to disable serial
 #define SERIALOUT
 
+/*** UNUSED
 //Target temperature and humidity
 #define TTEMP 23
 #define TDELTA 8
 
 #define THUM  40
 #define HDELTA 10
-
+*/
 class State
 {
 public:
   //Target variable in common and differential
-  int tTempc, tTempd;
-  int tHumc, tHumd;
+  //int tTempc, tTempd;
+  //int tHumc, tHumd;
   //Actuators---------------
   boolean heater,humidifier,heaterCable;
   unsigned short outFan;
@@ -85,10 +86,6 @@ int State::setup(short sdpin)
   this->humidifier=0;
   this->outFan=255;
 
-  this->tTempc=TTEMP;
-  this->tTempd=TDELTA;
-  this->tHumc=THUM;
-  this->tHumd=HDELTA;
 }
 /***
  * Return:

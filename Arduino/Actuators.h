@@ -15,6 +15,9 @@
 #include "ControlOnOff.h"
 #include "ControlTimer.h"
 
+#include "DigitalOut.h"
+#include "Fan.h"
+
 #define HEATPIN 2
 #define HUMPIN 3
 #define HEATCABLEPIN 4
@@ -32,7 +35,10 @@ public:
     int update(State *state);
 protected:
 private:
-    unsigned short heatpin,humpin;
+    DigitalOut heater,
+    humidifier,
+    heatcable;
+    //unsigned short heatpin,humpin;
     ControlOnOff t,tc;
 #ifndef HUMCONTROLLED
     ControlTimer cth;
@@ -44,6 +50,7 @@ private:
 
 
 };
+<<<<<<< HEAD
 /** @brief Update actuators state
  *
  * Update Actuators commands according to state of the system stored in the state variable according
@@ -180,6 +187,8 @@ int Actuators::setup()
 }
 
 
+=======
+>>>>>>> DODebug
 
 #endif // ACTUATORS_H
 

@@ -2,7 +2,7 @@
 #define FAN_H
 #include <Arduino.h>
 
-#define DEBUGFAN
+//#define DEBUGFAN
 /*******************************************************************
  *                   ==SmartGreenHouse==
  *   Control On/Off Class
