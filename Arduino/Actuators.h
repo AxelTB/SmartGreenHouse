@@ -12,7 +12,7 @@
 #define ACTUATORS_H
 
 #include "State.h"
-#include "ControlOnOff.h"
+#include "Comparator.h"
 #include "ControlTimer.h"
 
 #include "DigitalOut.h"
@@ -39,11 +39,11 @@ private:
     humidifier,
     heatcable;
     //unsigned short heatpin,humpin;
-    ControlOnOff t,tc;
+    Comparator t,tc;
 #ifndef HUMCONTROLLED
     ControlTimer cth;
 #else
-    ControlOnOff h;
+    Comparator h;
 #endif
     Fan outFan;
 
