@@ -18,7 +18,7 @@ bool Comparator::update(float val)
 {
     if(val>=this->max)
         this->status=1;
-    else if (val=<this->min)
+    else if (val<=this->min)
         this->status=0;
 
 //Returns status inverted if inverting bit set
