@@ -134,7 +134,7 @@ int DigitalOut::init(uint8_t pin)
   this->status=false;
   this->timerMin.set(1000); //Wait 1 sec before switch
   this->timerMax.reset(); //No maximum down timer
-  
+
   pinMode(this->pin,OUTPUT);
 }
 
@@ -162,7 +162,7 @@ DigitalOut::DigitalOut(uint8_t pin)
  */
 DigitalOut::DigitalOut()
 {
-
+    this->status=0;
 }
 
 

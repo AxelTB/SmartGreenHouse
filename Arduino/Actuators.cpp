@@ -31,8 +31,8 @@ int Actuators::update(State *state)
   {
     //Heater------------------------------------------------------------------------------------------------
     short dbgctrl=t.update(state->temp);
-    //Serial.print("H:");
-    //Serial.println(dbgctrl);
+    Serial.print("H:");
+    Serial.println(dbgctrl);
     state->heater = this->heater.set(dbgctrl);
 
     //Heat Cable------------------------------------------------------
@@ -54,7 +54,7 @@ int Actuators::update(State *state)
    state->humidifier=cth.update(millis());
    if(!state->level)
    state->humidifier=0;
-   digitalWrite(HUMPIN,state->humidifier);*/  not implemented, define HUMCONTROLLED
+   digitalWrite(HUMPIN,state->humidifier);*/  //not implemented, define HUMCONTROLLED
 #endif
     //Full power if > 30°
   if(state->temp>30)
