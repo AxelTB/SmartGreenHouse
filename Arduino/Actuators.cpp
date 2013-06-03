@@ -92,8 +92,8 @@ int Actuators::setup()
 
 ///Parameter definition
 ///Heater 18°+-3
-//Humidifier 35+-10
-//Heat cable 25+-5
+///Humidifier 35+-10
+///Heat cable 25+-5
   t.setup(18,6,1);//Set temperature maximum variation around target
 
 #ifdef HUMCONTROLLED
