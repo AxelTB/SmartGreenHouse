@@ -79,10 +79,10 @@ int Actuators::update(State *state)
  */
 int Actuators::setup()
 {
-
-  this->heater.init(HEATPIN,300,60,0,600); //Heater setup
+///MaxOn, MinOn, MaxOff,MinOff
+  this->heater.init(HEATPIN,300,60,0,60); //Heater setup
   this->humidifier.init(HUMPIN,0,60,0,60);  //Humidifier pin
-  this->heatcable.init(HEATCABLEPIN,0,0,0,0);
+  this->heatcable.init(HEATCABLEPIN,0,60,0,0);
 
   //Fan 27 mq/h
   //1 mq/20min = 30 pwm ->
