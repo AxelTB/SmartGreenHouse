@@ -30,9 +30,9 @@ int Actuators::update(State *state)
   else
   {
     //Heater------------------------------------------------------------------------------------------------
-    short dbgctrl=t.update(state->temp);
-    Serial.print("H:");
-    Serial.println(dbgctrl);
+    bool dbgctrl=t.update(state->temp);
+    //Serial.print("H:");
+    //Serial.println(dbgctrl);
     state->heater = this->heater.set(dbgctrl);
 
     //Heat Cable------------------------------------------------------

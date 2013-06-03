@@ -16,15 +16,16 @@ bool Comparator::getStatus()
   */
 bool Comparator::update(float val)
 {
-    return 0;
+
     if(val>=this->max)
         this->status=1;
     else if (val<=this->min)
         this->status=0;
-
+Serial.print(val); Serial.print("->");Serial.println(this->status);
 //Returns status inverted if inverting bit set
 if(this->inverting)
     return !this->status;
+    else
     return this->status;
 }
 

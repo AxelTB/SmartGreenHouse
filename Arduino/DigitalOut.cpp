@@ -8,18 +8,22 @@ bool DigitalOut::set(bool value)
   if(!this->timerMin.isElapsed()) //If minimum timer not elapsed
       return this->status; //Just return current status
   ///****************DGB******************
-  //Serial.print(value);
+  Serial.print("DigitaOut:");
+  Serial.println(value);
   if(value==this->status) //If command not changed
   {
     //Just check maximum timer
     if(this->timerMax.isElapsed()) //If maximum timer elapsed
-        return set(!this->status); //Switch status
+    {
+Serial.println("Switch forced") ;
+return set(!this->status); //Switch status
+    }
+
     //Serial.println(":No change");
 
   }
   else
   {
-    //Serial.println(":Switch");
     if(value==true)
     {
       this->timerMin.set(this->MinOnTime); //Set minimum On timer
@@ -132,7 +136,7 @@ int DigitalOut::init(uint8_t pin)
   this->MaxOffTime=0;
 
   this->status=false;
-  this->timerMin.set(1000); //Wait 1 sec before switch
+  this->timerMin.set(5000); //Wait 1 sec before switch
   this->timerMax.reset(); //No maximum down timer
 
   pinMode(this->pin,OUTPUT);

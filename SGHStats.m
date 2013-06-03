@@ -2,7 +2,7 @@
 
 close all, clear all
 %file='../SmartGreenHouse_data/last/TotTemp';
-file='../SmartGreenHouse_data/Debug/T0';
+file='../SmartGreenHouse_data/Debug/T1';
 
 data=load(file);
 
@@ -14,15 +14,23 @@ hcableT=25;
 humidifierD=10;
 humidifierT=35;
 
+pend=length(data);
+pstart=1;
+%Time
+%time=(pstart:pend)/3600*2;
+time=(pstart:pend).*2;
+
 
 fantocmph=16/(0.589*255);
 
 
-pend=length(data);
-pstart=1;
+
 % pstart=6*24*3600/2;
 % pend=7*24*3600/2;
-time=(pstart:pend)/3600*2;
+
+
+
+
 
 %time=6*3600
 temp=data(pstart:pend,1);
