@@ -32,8 +32,8 @@ public:
     int init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MaxOffTimeS,unsigned long MinOffTimeS);
 
 //Return true if set HIGH false if LOW
-    inline bool on();
-    inline bool off();
+    bool on();
+    bool off();
     bool set(int value);
     bool set(short value);
     bool set(uint8_t value);

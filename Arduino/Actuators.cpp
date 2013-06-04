@@ -30,7 +30,7 @@ int Actuators::update(State *state)
   else
   {
     //Heater------------------------------------------------------------------------------------------------
-    short dbgctrl=t.update(state->temp);
+    bool dbgctrl=t.update(state->temp);
     //Serial.print("H:");
     //Serial.println(dbgctrl);
     state->heater = this->heater.set(dbgctrl);
@@ -54,7 +54,7 @@ int Actuators::update(State *state)
    state->humidifier=cth.update(millis());
    if(!state->level)
    state->humidifier=0;
-   digitalWrite(HUMPIN,state->humidifier);*/  not implemented, define HUMCONTROLLED
+   digitalWrite(HUMPIN,state->humidifier);*/  //not implemented, define HUMCONTROLLED
 #endif
     //Full power if > 30°
   if(state->temp>30)
@@ -79,10 +79,10 @@ int Actuators::update(State *state)
  */
 int Actuators::setup()
 {
-
-  this->heater.init(HEATPIN,300,60,0,600); //Heater setup
+///MaxOn, MinOn, MaxOff,MinOff
+  this->heater.init(HEATPIN,300,60,0,60); //Heater setup
   this->humidifier.init(HUMPIN,0,60,0,60);  //Humidifier pin
-  this->heatcable.init(HEATCABLEPIN,0,1200,0,0);
+  this->heatcable.init(HEATCABLEPIN,0,60,0,0);
 
   //Fan 27 mq/h
   //1 mq/20min = 30 pwm ->
@@ -92,8 +92,8 @@ int Actuators::setup()
 
 ///Parameter definition
 ///Heater 18°+-3
-//Humidifier 35+-10
-//Heat cable 25+-5
+///Humidifier 35+-10
+///Heat cable 25+-5
   t.setup(18,6,1);//Set temperature maximum variation around target
 
 #ifdef HUMCONTROLLED

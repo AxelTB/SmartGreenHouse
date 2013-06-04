@@ -6,10 +6,13 @@
   */
 bool TimeAlarm::isElapsed()
 {
+    //If not active never elapsed
+    if(!active)
+        return false;
   ///*************DEBUG*********************
   unsigned long dbgt=getElapsedMillis(this->start);
-//  Serial.print("---");  Serial.print(dbgt);  Serial.println("---");
-    if(active && dbgt>this->timeout) //If timeout occurred & Timer active
+  Serial.print("---");  Serial.print(dbgt);  Serial.println("---");
+    if(dbgt>this->timeout) //If timeout occurred & Timer active
         return true;
         else
     return false;
@@ -30,6 +33,9 @@ void TimeAlarm::reset()
   */
 void TimeAlarm::set(unsigned long timeoutms)
 {
+    Serial.print("Set to:");
+    Serial.println(timeoutms);
+
     this->start=millis();
     this->timeout=timeoutms;
     this->active=true;

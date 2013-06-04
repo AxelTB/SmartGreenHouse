@@ -16,13 +16,17 @@ bool Comparator::getStatus()
   */
 bool Comparator::update(float val)
 {
+
     if(val>=this->max)
         this->status=1;
-    else if (val=<this->min)
+    else if (val<=this->min)
         this->status=0;
-
+Serial.print(val); Serial.print("->");Serial.println(this->status);
 //Returns status inverted if inverting bit set
-    return this->status^this->inverting;
+if(this->inverting)
+    return !this->status;
+    else
+    return this->status;
 }
 
 /** @brief setup
@@ -32,10 +36,13 @@ bool Comparator::update(float val)
 void Comparator::setup(short target,unsigned short delta,bool inverting)
 {
     //Evaluate max and min
-    this->max=target+delta/2;
-    this->min=target-delta/2;
+    this->max=(float)target+delta/2;
+    this->min=(float)target-delta/2;
 
     this->inverting=inverting;
+
+    //Start powered down
+    this->status=0;
 
 }
 

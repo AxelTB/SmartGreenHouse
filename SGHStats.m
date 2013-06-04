@@ -2,18 +2,35 @@
 
 close all, clear all
 %file='../SmartGreenHouse_data/last/TotTemp';
-file='../SmartGreenHouse_data/last/Temp27';
+file='../SmartGreenHouse_data/Debug/T2';
 
 data=load(file);
+
+%Parameters
+heaterD=3;
+heaterT=18;
+hcableD=5;
+hcableT=25;
+humidifierD=10;
+humidifierT=35;
+
+pend=length(data);
+pstart=1;
+%Time
+time=(pstart:pend)/3600*2;
+%time=(pstart:pend).*2;
+
 
 fantocmph=16/(0.589*255);
 
 
-pend=length(data);
-pstart=1;
+
 % pstart=6*24*3600/2;
 % pend=7*24*3600/2;
-time=(pstart:pend)/3600*2;
+
+
+
+
 
 %time=6*3600
 temp=data(pstart:pend,1);
@@ -28,7 +45,7 @@ outf=data(pstart:pend,9);
 %%%General state evolution-------------------------------------------------
 figure('Name','Sistem evolution','NumberTitle','off')
 axis(1)=subplot(2,1,1);
-plot(time,temp,'g',time,heat.*10+15,'r*',time,hcable*10+20,'ob')
+plot(time,temp,'g',time,heat.*heaterD*2-heaterD+heaterT,'r*',time,hcable*hcableD*2-hcableD+hcableT,'ob')
 legend('Temperature', 'Heater','Heat Cable');
 xlabel('Time (h)')
 axis(2)=subplot(2,1,2);
