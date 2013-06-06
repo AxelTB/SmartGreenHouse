@@ -16,19 +16,8 @@ Contains all sensor procedure to update state variable
 #define SENSORS_H
 
 #include "State.h"
-#include <DHT.h>
 
-#define DHTPIN 8
-#define DHTTYPE DHT11
 
-#define LEVELPIN 5
-#define LIGHTAPIN 0
-
-#define LIGHTTAU 10
-#define HUMIDITYTAU 120
-
-#define GOODLEVEL HIGH
-#define DHTMAXERRN 5
 class Sensors
 {
 //To be used with noisy input
@@ -56,8 +45,7 @@ public:
     int update(State *state);
 protected:
 private:
-    DHT dht;
-    unsigned short dhterrN;
+
     LowPassFilter lplight,lphumidity;
 
 };

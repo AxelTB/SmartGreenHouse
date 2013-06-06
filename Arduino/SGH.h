@@ -1,9 +1,8 @@
 #ifndef SGH_H
 #define SGH_H
 
+#include <DHT.h>
 #include "Actuators.h"
-#include "Sensors.h"
-//#include "State.h"
 
 class SGH
 {
@@ -14,10 +13,12 @@ class SGH
         ~SGH();
     protected:
     Actuators act;
-
-Sensors sens;
 State state;
     private:
+
+    ///Sensors variables----------------
+    DHT dht;
+    unsigned short dhterrN;
 };
 
 #endif // SGH_H
