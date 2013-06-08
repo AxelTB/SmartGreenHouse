@@ -4,6 +4,9 @@
 #include <DHT.h>
 #include "Actuators.h"
 
+//Saved defines---------------
+#define DHTMAXERRN 5
+
 class SGH
 {
     public:
