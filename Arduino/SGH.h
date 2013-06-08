@@ -8,9 +8,19 @@ class SGH
 {
     public:
         SGH();
-        int init(); //Inizialize with standard values
-        int update();
+        int initSTD(); //Inizialize with standard values
+        int updateSTD();
         ~SGH();
+///Public methods----------------------------------------
+        int update(); //Update system according to configured modules
+
+        ///Sensors method (Implemented in Sensors.cpp)
+        int attachDHT(uint8_t pin,uint8_t type); //Attach new DHT
+        int updateDHT(); //Update status according to DHT measurements
+
+        ///Log methods
+        int logInit(uint8_t sdPin); //Initialize sd & logging on defined pin
+///------------------------------------------------------
     protected:
     Actuators act;
 State state;

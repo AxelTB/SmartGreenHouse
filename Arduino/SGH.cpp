@@ -23,7 +23,7 @@ SGH::SGH()
   *
   * @todo: document this function
   */
-int SGH::update()
+int SGH::updateSTD()
 {
 ///Sensors updating-------------------------------------------------------------------------------
 //Read temperature and humudity
@@ -36,35 +36,35 @@ int SGH::update()
         //If dht11 failed for too many times consecutively
         if((++this->dhterrN)>DHTMAXERRN)
         {
-            state->esensors|=State::ESENS_DHTERR;
-            state->log(State::CRITICAL,"Dht11 major error");
+            this->state.esensors|=State::ESENS_DHTERR;
+            this->state.log(State::CRITICAL,"Dht11 major error");
         }
         else
-            state->log(State::ERROR,"Dht11 minor error");
+            this->state.log(State::ERROR,"Dht11 minor error");
     }
     else
     {
         //Clear DHT11 Error (If present)
-        state->esensors&=!(State::ESENS_DHTERR);
+        this->state.esensors&=!(State::ESENS_DHTERR);
         //Update temperature & humidity
-        state->temp=t;
-        state->humidity=h;
+        this->state.temp=t;
+        this->state.humidity=h;
 
         //Set error count to 0
         this->dhterrN=0;
     }
     //Set level according to level sensor----------------------------------
-    if(!(digitalRead(LEVELPIN)==GOODLEVEL) && state->level)
+    if(!(digitalRead(LEVELPIN)==GOODLEVEL) && this->state.level)
     {
         //Level just went low
-        state->log(State::ERROR,"Low Water level");
+        this->state.log(State::ERROR,"Low Water level");
     }
-    state->level=(digitalRead(LEVELPIN)==GOODLEVEL);
+    this->state.level=(digitalRead(LEVELPIN)==GOODLEVEL);
     //Read Light sensor----------------------------------------------------
-    state->light=analogRead(LIGHTAPIN);
+    this->state.light=analogRead(LIGHTAPIN);
     //Filtered variables
-    state->flight=this->lplight.update(state->light);
-    state->fhumidity=this->lphumidity.update(state->humidity);
+    //this->state.flight=this->lplight.update(state->light);
+    //this->state.fhumidity=this->lphumidity.update(state->humidity);
 ///-----------------------------------------------------------------------------------------------------
   act.update(&this->state);
   //SD Log -------------------------------------------
@@ -75,7 +75,7 @@ int SGH::update()
   *
   * @todo: document this function
   */
-int SGH::init()
+int SGH::initSTD()
 {
 Serial.begin(9600); // only required for testing
   Serial.print("Setup...");
@@ -89,8 +89,8 @@ Serial.begin(9600); // only required for testing
     this->dht=DHT(DHTPIN,DHTTYPE);
     this->dht.begin();
     //Filter definition
-    this->lplight.setup(LIGHTTAU);
-    this->lphumidity.setup(HUMIDITYTAU);
+    //this->lplight.setup(LIGHTTAU);
+    //this->lphumidity.setup(HUMIDITYTAU);
 
 ///Actuators---------------------------------------------------------------------------------------------
   act.setup();

@@ -18,13 +18,13 @@ long time;
 
 void setup()
 {
-  sgh.init();
+  sgh.initSTD();
   time=millis();
 }
 
 void loop()
 {
-  sgh.update();
+  sgh.updateSTD();
   //Wait for looptime---------------------------------------------
   while(millis()-time<LOOPT*1000);
   time=millis();
