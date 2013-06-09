@@ -119,7 +119,7 @@ int SGH::updateSTD()
 ///-----------------------------------------------------------------------------------------------------
 
   //SD Log -------------------------------------------
-  this->state.saveStats();
+  this->state.saveStatsSTD();
 
 }
 
@@ -131,7 +131,7 @@ int SGH::initSTD()
 {
 Serial.begin(9600); // only required for testing
   Serial.print("Setup...");
-  state.setup(SDPIN);
+  state.setupSTD(SDPIN);
 
 ///Sensors Setup---------------------------------------------------------------------------------------
       pinMode(LEVELPIN,INPUT);

@@ -1,5 +1,5 @@
 #include "State.h"
-int State::setup(short sdpin)
+int State::setupSTD(short sdpin)
 {
   pinMode(10, OUTPUT); //Needed to make sd work
   sdstatus=(SD.begin(sdpin));
@@ -20,7 +20,7 @@ int State::setup(short sdpin)
  * -1 -> File Error
  * 1 -> Sd not initialized
  */
-int State::saveStats()
+int State::saveStatsSTD()
 {
 #ifdef SERIALOUT
   Serial.print(this->temp);

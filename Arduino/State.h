@@ -3,11 +3,11 @@
  *   State
  *   Created: 17/02/2013
  *   Author:  Ax
- *   License: CC BY-SA 3.0 
+ *   License: CC BY-SA 3.0
  *            http://creativecommons.org/licenses/by-sa/3.0/
  *=====================================================================
  * State
- * Contains state variable, target and actuator state. 
+ * Contains state variable, target and actuator state.
  ********************************************************************/
 #ifndef STATE_H
 #define STATE_H
@@ -49,8 +49,8 @@ public:
   long milliseconds;
   //SD------------------------
   boolean sdstatus;
-  int setup(short sdpin);
-  int saveStats();
+  int setupSTD(short sdpin);
+  int saveStatsSTD();
   int log(byte level,char *data);
 
   //Error flags for sensors---------------------------------------------------------------
