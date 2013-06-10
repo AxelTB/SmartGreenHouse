@@ -2,7 +2,7 @@
 
 close all, clear all
 %file='../SmartGreenHouse_data/last/TotTemp';
-file='../SmartGreenHouse_data/Debug/T2';
+file='../SmartGreenHouse_data/Debug/T3';
 
 data=load(file);
 
