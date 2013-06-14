@@ -29,7 +29,7 @@ public:
 
     ///Log methods
     int logInit(uint8_t sdPin); //Initialize sd & logging on defined pin
-    int saveStatsSTD(); //Save statistics
+    int saveStats(); //Save statistics
     int log(byte level,char *data); //Log char string
     //Loglevel---------------------
     static const unsigned short CRITICAL=3;

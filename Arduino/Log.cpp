@@ -8,7 +8,7 @@
  * -1 -> File Error
  * 1 -> Sd not initialized
  */
-int SGH::saveStatsSTD()
+int SGH::saveStats()
 {
 #ifdef SERIALOUT
     Serial.print(this->state.temp);
