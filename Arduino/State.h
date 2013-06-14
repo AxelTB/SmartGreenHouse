@@ -39,7 +39,6 @@ State();
   //State variable----------
   float temp,humidity;
   short light;
-  float fhumidity,flight;
   boolean level;
 
   //Errors variable---------

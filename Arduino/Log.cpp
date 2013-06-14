@@ -23,10 +23,6 @@ int SGH::saveStatsSTD()
     Serial.print(",");
     Serial.print(this->state.light);
     Serial.print(",");
-    Serial.print(this->state.flight);
-    Serial.print(",");
-    Serial.print(this->state.fhumidity);
-    Serial.print(",");
     Serial.print(this->state.outFan);
     Serial.println();
 #endif
@@ -57,10 +53,6 @@ int SGH::saveStatsSTD()
     myFile.print(this->state.heaterCable);
     myFile.print(",");
     myFile.print(this->state.light);
-    myFile.print(",");
-    myFile.print(this->state.flight);
-    myFile.print(",");
-    myFile.print(this->state.fhumidity);
     myFile.print(",");
     myFile.print(this->state.outFan);
     myFile.println();
