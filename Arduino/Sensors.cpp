@@ -29,10 +29,10 @@ int SGH::updateDHT()
         if((++this->dhterrN)>DHTMAXERRN)
         {
             this->state.esensors|=State::ESENS_DHTERR;
-            this->state.log(State::CRITICAL,"Dht11 major error");
+            this->log(SGH::CRITICAL,"Dht11 major error");
         }
         else
-            this->state.log(State::ERROR,"Dht11 minor error");
+            this->log(SGH::ERROR,"Dht11 minor error");
 
         return this->dhterrN; //Returns number of errors
     }

@@ -38,9 +38,7 @@ heat=data(pstart:pend,2);
 humidity=data(pstart:pend,3);
 humidifier=data(pstart:pend,4);
 hcable=data(pstart:pend,5);
-
-fhumidity=data(pstart:pend,8);
-outf=data(pstart:pend,9);
+outf=data(pstart:pend,6);
 
 %%%General state evolution-------------------------------------------------
 figure('Name','Sistem evolution','NumberTitle','off')
