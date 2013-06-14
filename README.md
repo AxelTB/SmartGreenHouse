@@ -2,5 +2,46 @@ SmartGreenHouse
 ===============
 
 Smart Greenhouse designed for urban garden.
-Created for Arduino using DHT11 as temperature and humidity sensor.
-A fan, a humidifier and a heater (With a relay pack) may be needed to ensure the right environment.
+Created for Arduino using a DHT temperature and humidity sensor.
+A fan, a humidifier and two heater (With a relay pack) are currently working of the full version.
+
+
+
+Log Example
+===========
+Simple SD Temperature & Humidity Logger.
+
+Needs:
+==
+Hardware:
+
+- Any Arduino
+- An SD Interface with SD card Fat Formatted
+- DHT11/DHT22 (And a pull-up resistors)
+Software:
+- Arduino SDK (Or any other stuff you like to use)
+- SD Library (Included in the Arduino SDK)
+- Adafruit's DHTXX Library
+
+Everything you should know about DHTXX sensors (And the library) is here: http://learn.adafruit.com/dht
+
+Code
+====
+The code should be in your Examples under SGH->SGHLog.
+
+Defines:
+- DHTP 		- DHTXX pin
+- SDP		- SD CS pin
+- DELAYSECONDS 	- Second between measurements
+
+LogFiles:
+- Temp.txt
+	Raw Data
+	Temperature, HR, ...
+- Log.txt
+Errors and log
+
+Stats View
+==========
+Copy the TEMP.TXT file in the Same Folder as SGHStats.m
+The file should be run by any Matlab-like interpreter. It shows all statistics, in this example the only nonzero data should be about temperature and humidity.

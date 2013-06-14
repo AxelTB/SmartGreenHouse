@@ -50,7 +50,7 @@ axis(2)=subplot(2,1,2);
 plot(time,humidity./100,'g',time,humidifier,'b*',time,outf./255,'r*')
 legend('Humidity', 'Humidifier', 'Fan');
 xlabel('Time (h)')
-linkaxes(axis, 'x');
+%linkaxes(axis, 'x');
 
 if(max(time)<12)
     Tmedian=median(temp)
@@ -111,7 +111,7 @@ else
     title('Humidity median')
     xlabel('Time (h)')
     ylabel('%')
-    linkaxes(axis, 'x');
+    %linkaxes(axis, 'x');
     
     if(max(time)/24>3)
         %%Daily Stat (If more than 3 days)-------------------------------
