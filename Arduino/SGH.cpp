@@ -51,7 +51,7 @@ int SGH::updateSTD()
     if(!(digitalRead(LEVELPIN)==GOODLEVEL) && this->state.level)
     {
         //Level just went low
-        this->state.log(State::ERROR,"Low Water level");
+        this->log(SGH::ERROR,"Low Water level");
     }
     this->state.level=(digitalRead(LEVELPIN)==GOODLEVEL);
     //Read Light sensor----------------------------------------------------
@@ -75,7 +75,7 @@ int SGH::updateSTD()
     //Stop Fan
     this->outFan.stop();
     //Add log
-    state.log(State::CRITICAL,"DHT Major error. Shutting down all actuators");
+    this->log(SGH::CRITICAL,"DHT Major error. Shutting down all actuators");
     ///=============================================================================================
   }
   //----------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@ int SGH::updateSTD()
 ///-----------------------------------------------------------------------------------------------------
 
   //SD Log -------------------------------------------
-  this->state.saveStatsSTD();
+  this->saveStatsSTD();
 
 }
 
@@ -129,9 +129,9 @@ int SGH::updateSTD()
   */
 int SGH::initSTD()
 {
-Serial.begin(9600); // only required for testing
   Serial.print("Setup...");
-  state.setupSTD(SDPIN);
+///State setup----------------------------
+  logInit(SDPIN);
 
 ///Sensors Setup---------------------------------------------------------------------------------------
       pinMode(LEVELPIN,INPUT);

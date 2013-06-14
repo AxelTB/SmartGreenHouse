@@ -9,33 +9,43 @@
 //Saved defines---------------
 #define DHTMAXERRN 5
 
+//Undefine to disable serial
+#define SERIALOUT
+
 class SGH
 {
-    public:
-        SGH();
-        int initSTD(); //Inizialize with standard values
-        int updateSTD();
+public:
+    SGH();
+    int initSTD(); //Inizialize with standard values
+    int updateSTD();
 
-        ~SGH();
+    ~SGH();
 ///Public methods----------------------------------------
-        int update(); //Update system according to configured modules
+    int update(); //Update system according to configured modules
 
-        ///Sensors method (Implemented in Sensors.cpp)
-        int attachDHT(uint8_t pin,uint8_t type); //Attach new DHT
-        int updateDHT(); //Update status according to DHT measurements
+    ///Sensors method (Implemented in Sensors.cpp)
+    int attachDHT(uint8_t pin,uint8_t type); //Attach new DHT
+    int updateDHT(); //Update status according to DHT measurements
 
-        ///Log methods
-        int logInit(uint8_t sdPin); //Initialize sd & logging on defined pin
+    ///Log methods
+    int logInit(uint8_t sdPin); //Initialize sd & logging on defined pin
+    int saveStatsSTD(); //Save statistics
+    int log(byte level,char *data); //Log char string
+    //Loglevel---------------------
+    static const unsigned short CRITICAL=3;
+    static const unsigned short ERROR=2;
+    static const unsigned short INFORMATION=1;
+    static const unsigned short DEBUG=0;
 ///------------------------------------------------------
-    protected:
-State state;
-    private:
+protected:
+    State state;
+private:
 
     ///Sensors variables----------------
     DHT dht;
     unsigned short dhterrN;
     ///Actuators Variables--------------
-         DigitalOut heater,
+    DigitalOut heater,
     humidifier,
     heatcable;
     Comparator t,tc;
