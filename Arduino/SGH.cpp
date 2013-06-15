@@ -25,13 +25,18 @@
 #define HCDELTA 4
 
 ///Modular methods
-/** @brief update
+/** @brief update SGH
   *
-  * @todo: document this function
+  * Returns 0 if everything fine
+  * Update DHT and save sta
   */
 int SGH::update()
 {
-    this->updateDHT();
+    this->updateDHT(); //Update DHT Status
+    if(this->state.sdstatus) //If SD configured
+        this->saveStats(); //Log statistics
+
+    return 0;
 }
 ///-------------------------------------------------
 

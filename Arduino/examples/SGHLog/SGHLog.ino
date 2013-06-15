@@ -17,7 +17,6 @@ void setup()
 
 void loop()
 {
-	sgh.updateDHT(); //Update DHT reading
-	sgh.saveStats(); //Save stats on SD
-	delay(DELAYSECONDS*1000l)
+	sgh.update(); //Update defined sensor and save data on SD
+	delay(DELAYSECONDS*1000l);
 }
