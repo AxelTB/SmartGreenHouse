@@ -5,7 +5,10 @@ Smart Greenhouse designed for urban garden.
 Created for Arduino using a DHT temperature and humidity sensor.
 A fan, a humidifier and two heater (With a relay pack) are currently working of the full version.
 
-
+Branches
+========
+The master contains the prototype code.
+The alpha version is for public use. Only log function is available. More feature will be soon added.
 
 Log Example
 ===========
@@ -45,3 +48,7 @@ Stats View
 ==========
 Copy the TEMP.TXT file in the Same Folder as SGHStats.m
 The file should be run by any Matlab-like interpreter. It shows all statistics, in this example the only nonzero data should be about temperature and humidity.
+Statistics comprehend all fully integrated sensors and actuators in the prototype.
+
+
+
