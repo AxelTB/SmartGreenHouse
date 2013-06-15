@@ -32,7 +32,7 @@ int SGH::saveStats()
         return 1;
     }
 
-    File myFile = SD.open("temp.txt",FILE_WRITE);
+    File myFile = SD.open("data.txt",FILE_WRITE);
     if (!myFile)
     {
 #ifdef SERIALOUT
