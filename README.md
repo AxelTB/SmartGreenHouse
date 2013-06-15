@@ -10,9 +10,14 @@ Branches
 The master contains the prototype code.
 The alpha version is for public use. Only log function is available. More feature will be soon added.
 
+Principle of Use
+================
+- Configure all sensors and actuators
+- Run the SGH.update() function on the main loop
+
 Log Example
 ===========
-Simple SD Temperature & Humidity Logger.
+Simple SD Temperature & Humidity Logger. Prints on the serial line all data too.
 
 Needs:
 ==
