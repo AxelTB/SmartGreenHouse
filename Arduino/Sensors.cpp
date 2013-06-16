@@ -1,5 +1,16 @@
+/*******************************************************************
+ *                   ==SmartGreenHouse==
+ *   SGH Sensors Implementation file
+ *   Created: 17/02/2013
+ *   Author:  Ax
+ *   License: CC BY-SA 3.0
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+ * Sensors
+ *
+ ********************************************************************/
+
 #include "SGH.h"
-///SGH Sensors Implementation file
 /***
 Returns: 0 all good!
 **/
