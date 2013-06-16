@@ -1,3 +1,13 @@
+/*******************************************************************
+*                   ==SmartGreenHouse==
+*   TimeAlarm Class
+*   Created: 17/02/2013
+*   Author:  Ax
+ *   License: CC BY-SA 3.0
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+Only indicates if a defined timeout elapsed
+********************************************************************/
 #include "TimeAlarm.h"
 #include <Arduino.h>
 /** @brief isElapsed
