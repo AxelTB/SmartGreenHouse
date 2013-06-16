@@ -1,18 +1,18 @@
-#ifndef FAN_H
-#define FAN_H
-#include <Arduino.h>
-
-//#define DEBUGFAN
 /*******************************************************************
- *                   ==SmartGreenHouse==
- *   Control On/Off Class
- *   Created: 07/03/2013
- *   Author:  Ax
+*                   ==SmartGreenHouse==
+*   Fan Class
+*   Created: 17/02/2013
+*   Author:  Ax
  *   License: CC BY-SA 3.0
  *            http://creativecommons.org/licenses/by-sa/3.0/
  *=====================================================================
- * Control Class for fan
- ********************************************************************/
+Fan output.
+Re-map fan power between minimum and maximum command.
+Implements an air circle routine.
+********************************************************************/
+#ifndef FAN_H
+#define FAN_H
+#include <Arduino.h>
 
 class Fan
 {

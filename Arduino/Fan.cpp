@@ -1,3 +1,15 @@
+/*******************************************************************
+*                   ==SmartGreenHouse==
+*   Fan implementation
+*   Created: 17/02/2013
+*   Author:  Ax
+ *   License: CC BY-SA 3.0
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+Fan output.
+Re-map fan power between minimum and maximum command.
+Implements an air circle routine.
+********************************************************************/
 #include <Fan.h>
 
 /** @brief setSpeed
