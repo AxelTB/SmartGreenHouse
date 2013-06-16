@@ -1,6 +1,6 @@
 /*******************************************************************
  *                   ==SmartGreenHouse==
- *   State
+ *   State class
  *   Created: 17/02/2013
  *   Author:  Ax
  *   License: CC BY-SA 3.0
@@ -59,6 +59,8 @@ State();
   //Error flags for actuators
   static const byte EACT_BHO=0b1;
 
+
+    bool serialOut;
 protected:
 
 private:
