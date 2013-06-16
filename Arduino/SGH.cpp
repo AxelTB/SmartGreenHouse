@@ -185,7 +185,7 @@ int SGH::initSTD()
     //Heat cable
     tc.setup(25,10,1);
 
-    Serial.println("DONE!");
+    //Serial.println("DONE!");
 }
 
 

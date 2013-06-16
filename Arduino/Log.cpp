@@ -111,7 +111,10 @@ int SGH::logInit(uint8_t sdPin,bool serialOut)
     this->state.serialOut=serialOut; //Save serial output flag
 
     if(this->state.serialOut)
+    {
         Serial.begin(9600); //Enable Serial Output
+        Serial.println("Serial Setup done");
+    }
 
     return this->state.sdstatus;
 }
