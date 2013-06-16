@@ -1,13 +1,14 @@
 /*******************************************************************
- *                   ==SmartGreenHouse==
- *   Digital Output Class
- *   Created: 17/02/2013
- *   Author:  Ax
+*                   ==SmartGreenHouse==
+*   DigitalOut class
+*   Created: 17/02/2013
+*   Author:  Ax
  *   License: CC BY-SA 3.0
  *            http://creativecommons.org/licenses/by-sa/3.0/
  *=====================================================================
- *All actuators code goes there
- ********************************************************************/
+Standard digital output.
+Implements various control function and minimum/maximum time control.
+********************************************************************/
 
 #ifndef DIGITALOUT_H
 #define DIGITALOUT_H

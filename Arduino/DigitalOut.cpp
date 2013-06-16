@@ -1,3 +1,14 @@
+/*******************************************************************
+*                   ==SmartGreenHouse==
+*   DigitalOut implementation
+*   Created: 17/02/2013
+*   Author:  Ax
+ *   License: CC BY-SA 3.0
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+Standard digital output.
+Implements various control function and minimum/maximum time control.
+********************************************************************/
 #include "DigitalOut.h"
 /** @brief set
  *
