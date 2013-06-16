@@ -1,3 +1,13 @@
+/*******************************************************************
+*                   ==SmartGreenHouse==
+*   Timecounter Implementation
+*   Created: 17/02/2013
+*   Author:  Ax
+ *   License: CC BY-SA 3.0
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+
+********************************************************************/
 #include "TimeCounter.h"
 #include <Arduino.h>
 

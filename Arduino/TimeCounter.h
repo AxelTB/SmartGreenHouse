@@ -1,9 +1,6 @@
-#ifndef TIMECOUNTER_H
-#define TIMECOUNTER_H
-
 /*******************************************************************
 *                   ==SmartGreenHouse==
-*   Control On/Off Class
+*   Timecounter Class
 *   Created: 17/02/2013
 *   Author:  Ax
  *   License: CC BY-SA 3.0
@@ -11,6 +8,10 @@
  *=====================================================================
 Simply returns elapsed time from last getElapsedMillis Call or creation
 ********************************************************************/
+
+#ifndef TIMECOUNTER_H
+#define TIMECOUNTER_H
+
 class TimeCounter
 {
     public:
