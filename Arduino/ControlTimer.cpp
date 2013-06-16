@@ -1,3 +1,14 @@
+/*******************************************************************
+*                   ==SmartGreenHouse==
+*   ControlTimer Class
+*   Created: 17/02/2013
+*   Author:  Ax
+ *   License: CC BY-SA 3.0
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+
+********************************************************************/
+
 #include "ControlTimer.h"
 /** @brief update
   *
@@ -16,7 +27,7 @@ bool ControlTimer::update(long mills)
         this->status=1;
         this->time=mills;
     }
-    
+
     return this->status;
 }
 
