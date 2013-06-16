@@ -10,7 +10,9 @@ SGH sgh; //Create new empty SmartGreenHouse
 
 void setup()
 {
-	sgh.logInit(SDP); //Init log module 
+	sgh.logInit(SDP); //Init log module (Serial 9600 baud)
+	//sgh.logInit(SDP,false); //Init log module without serial output
+
 	sgh.attachDHT(DHTP,DHT11); //Initialize DHTXX Sensor
 	//sgh.attachDHT(DHTP,DHT22); //DHT22 Version
 }
