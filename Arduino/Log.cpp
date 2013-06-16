@@ -1,6 +1,17 @@
+/*******************************************************************
+ *                   ==SmartGreenHouse==
+ *   Log method implementations File
+ *   Created: 17/02/2013
+ *   Author:  Ax
+ *   License: CC BY-SA 3.0
+ *            http://creativecommons.org/licenses/by-sa/3.0/
+ *=====================================================================
+ * Log
+ *
+ ********************************************************************/
+
 #include <SGH.h>
 #include <SD.h>
-///Log method implementations File
 
 /***
  * Return:
@@ -10,7 +21,8 @@
  */
 int SGH::saveStats()
 {
-#ifdef SERIALOUT
+if(this->state.serialOut)
+{
     Serial.print(this->state.temp);
     Serial.print(",");
     Serial.print(this->state.heater);
@@ -25,7 +37,7 @@ int SGH::saveStats()
     Serial.print(",");
     Serial.print(this->state.outFan);
     Serial.println();
-#endif
+}
     if(!this->state.sdstatus)
     {
         Serial.println("SD Error");
@@ -35,9 +47,9 @@ int SGH::saveStats()
     File myFile = SD.open("data.txt",FILE_WRITE);
     if (!myFile)
     {
-#ifdef SERIALOUT
+if(this->state.serialOut)
         Serial.println("Error opening file");
-#endif
+
         return -1;
     }
 
@@ -77,11 +89,13 @@ int SGH::log(byte level,char *data)
     myFile.println(data);
 
     myFile.close();
-#ifdef SERIALOUT
+if(this->state.serialOut)
+{
+
     Serial.print((int) level);
     Serial.print(",");
     Serial.println(data);
-#endif
+}
     return 0;
 }
 
@@ -89,13 +103,15 @@ int SGH::log(byte level,char *data)
   *
   * (documentation goes here)
   */
-int SGH::logInit(uint8_t sdPin)
+int SGH::logInit(uint8_t sdPin,bool serialOut)
 {
     pinMode(10, OUTPUT); //Needed to make sd work
     this->state.sdstatus=(SD.begin(sdPin)); //Save sd status
 
-#ifdef SERIALOUT
-Serial.begin(9600); // only required for testing
-#endif
+    this->state.serialOut=serialOut; //Save serial output flag
+
+    if(this->state.serialOut)
+        Serial.begin(9600); //Enable Serial Output
+
     return this->state.sdstatus;
 }

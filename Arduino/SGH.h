@@ -1,5 +1,17 @@
+/*******************************************************************
+*                   ==SmartGreenHouse==
+*   SGH Class Definition
+*   Created: 17/02/2013
+*   Author:  Ax
+*   License: CC BY-SA 3.0
+*            http://creativecommons.org/licenses/by-sa/3.0/
+*=====================================================================
+ * SmartGreenHouse class
+ * Main class
+ ********************************************************************/
 #ifndef SGH_H
 #define SGH_H
+
 
 #include <DHT.h>
 #include "State.h"
@@ -8,9 +20,6 @@
 #include "Fan.h"
 //Saved defines---------------
 #define DHTMAXERRN 5
-
-//Undefine to disable serial
-#define SERIALOUT
 
 class SGH
 {
@@ -28,7 +37,7 @@ public:
     int updateDHT(); //Update status according to DHT measurements
 
     ///Log methods
-    int logInit(uint8_t sdPin); //Initialize sd & logging on defined pin
+    int logInit(uint8_t sdPin,bool serialOut=true); //Initialize sd & logging on defined pin
     int saveStats(); //Save statistics
     int log(byte level,char *data); //Log char string
     //Loglevel---------------------
