@@ -25,7 +25,7 @@
 
 #define GOODLEVEL HIGH
 
-///Actuators Defines------------------------------------------------
+//Actuators Defines------------------------------------------------
 #define HEATPIN 2
 #define HUMPIN 3
 #define HEATCABLEPIN 4
@@ -36,8 +36,8 @@
 
 #define HCDELTA 4
 
-///Modular methods
-/** @brief update SGH
+//Modular methods
+/** @brief Update SmartGreenHouse
   *
   * Returns 0 if everything fine
   * Update DHT and save sta
