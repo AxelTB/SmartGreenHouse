@@ -10,6 +10,10 @@ Branches
 The master contains the prototype code.
 The alpha version is for public use. Only log function is available. More feature will be soon added.
 
+Documentation
+=============
+Install Doxygen and run it in the main path to generate documentation". A new directory named Doc should be created containing the HTML version of the codumentation"
+
 Principle of Use
 ================
 - Configure all sensors and actuators
