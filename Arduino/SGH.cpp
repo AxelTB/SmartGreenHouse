@@ -32,7 +32,7 @@
 #define OUTFPIN   10
 
 #define FANT 25 ///Fan target temperature
-#define FANP 10 ///Fan proportional term
+#define FANP 3 ///Fan proportional term
 
 #define HUMCONTROLLED
 
