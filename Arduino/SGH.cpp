@@ -36,6 +36,8 @@
 
 #define HCDELTA 4
 
+#define MAXTEMP 40///Maximum temperature allowed for the system
+
 //Modular methods
 
 int SGH::update()
@@ -121,8 +123,8 @@ int SGH::updateSTD()
 #endif
     }
 
-    ///Fan to Full power if > 30°
-    if(state.temp>30)
+    ///Fan to Full power if > MAXTEMP
+    if(state.temp>MAXTEMP)
         state.outFan=outFan.setSpeed(255);
     else
     {
