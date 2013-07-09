@@ -16,7 +16,12 @@ Static Class for time manipulation
 
 Use on board timer to evaluate short period of time and fixes overflow (Every ~41 days)
 ********************************************************************/
-
+/**
+  * @brief OBSOLETE!!!
+  *   Provide function to manipulate time
+  *
+  *
+  */
 class Time
 {
 public:
