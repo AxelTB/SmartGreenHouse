@@ -33,7 +33,8 @@ if(this->state.serialOut)
     Serial.print(",");
     Serial.print(this->state.heaterCable);
     Serial.print(",");
-    Serial.print(this->state.light);
+    //Serial.print(this->state.light);
+    Serial.print("666");//Temporary bho
     Serial.print(",");
     Serial.print(this->state.outFan);
     Serial.println();
@@ -64,7 +65,8 @@ if(this->state.serialOut)
     myFile.print(",");
     myFile.print(this->state.heaterCable);
     myFile.print(",");
-    myFile.print(this->state.light);
+    //myFile.print(this->state.light);
+    myFile.print(666);
     myFile.print(",");
     myFile.print(this->state.outFan);
     myFile.println();
