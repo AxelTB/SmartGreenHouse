@@ -30,7 +30,9 @@
 #define HUMPIN 3
 #define HEATCABLEPIN 4
 #define OUTFPIN   10
-#define FANT 25
+
+#define FANT 25 ///Fan target temperature
+#define FANP 10 ///Fan proportional term
 
 #define HUMCONTROLLED
 
@@ -130,7 +132,7 @@ int SGH::updateSTD()
     {
         //Evaluate distance from higher point
         float ferror=state.temp-FANT;
-        float kc=30;
+        float kc=FANP;
 
         if(ferror>0)
             state.outFan=outFan.setSpeed(kc*ferror);
