@@ -31,10 +31,6 @@ class SGH
 public:
     ///Standard Constructor
     SGH();
-    ///Initialize the standard behaviour
-    int initSTD();
-    ///Update the system following the standard behaviour
-    int updateSTD();
     ///Standard destructor
     ~SGH();
 //Public methods----------------------------------------

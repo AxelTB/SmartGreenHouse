@@ -37,25 +37,6 @@ SGH::SGH()
     ///Unused
 }
 
-/** @brief Standard Update funcion
-  *
-  * @todo: document this function
-  */
-int SGH::updateSTD()
-{
-
-}
-
-/** @brief Standard Init (OBSOLETE)!!!
-  *
-  * Standard initialization
-  * To be used only with updateSTD
-  */
-int SGH::initSTD()
-{
-
-}
-
 
 SGH::~SGH()
 {
