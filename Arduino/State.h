@@ -18,7 +18,7 @@
 #define SDPIN 9 //ALSO 11,12 and 13
 
 
-/*** UNUSED
+/* UNUSED
 //Target temperature and humidity
 #define TTEMP 23
 #define TDELTA 8
@@ -34,21 +34,26 @@ State();
   //int tTempc, tTempd;
   //int tHumc, tHumd;
   //Actuators---------------
-  boolean heater,humidifier,heaterCable;
-  unsigned short outFan;
+  boolean heater, /**Heater status*/
+  humidifier,      /**Humidifier status*/
+  heaterCable;  /**Heat Cable status*/
+
+  unsigned short outFan; /**Fan power (0-255)*/
   //State variable----------
-  float temp,humidity;
-  short light;
-  boolean level;
+  float temp, /**Temperature*/
+  humidity; /***Humidity*/
+  //short light; /**Light. Unused*/
+  boolean level; /**Humidifier water sensor level status*/
 
   //Errors variable---------
-  byte esensors,eactuators;
+  byte esensors,    /**Sensors error byte*/
+  eactuators;       /***Actuators error byte*/
 
   //Time evaluation---------
-  //Milliseconds from start
-  long milliseconds;
+
+  //long milliseconds;    /*** Milliseconds from start UNUSED*/
   //SD------------------------
-  boolean sdstatus;
+  boolean sdstatus; /***SD Status*/
 
   //Error flags for sensors---------------------------------------------------------------
   static const byte ESENS_DHTERR=0b1;

@@ -37,34 +37,36 @@
 #define HCDELTA 4
 
 //Modular methods
+
+int SGH::update()
+{
 /** @brief Update SmartGreenHouse
   *
   * Returns 0 if everything fine
-  * Update DHT and save sta
+  * Update DHT and save statistics
   */
-int SGH::update()
-{
     this->updateDHT(); //Update DHT Status
     if(this->state.sdstatus) //If SD configured
         this->saveStats(); //Log statistics
 
     return 0;
 }
-///-------------------------------------------------
+//-------------------------------------------------
 
 SGH::SGH()
 {
-    //ctor
+    ///Unused
 }
-/** @brief update
+
+/** @brief Standard Update funcion
   *
   * @todo: document this function
   */
 int SGH::updateSTD()
 {
-///Sensors updating-------------------------------------------------------------------------------
+//Sensors updating-------------------------------------------------------------------------------
     this->updateDHT();
-    //Set level according to level sensor----------------------------------
+    ///Set level according to level sensor
     if(!(digitalRead(LEVELPIN)==GOODLEVEL) && this->state.level)
     {
         //Level just went low
@@ -76,15 +78,15 @@ int SGH::updateSTD()
     //Filtered variables
     //this->state.flight=this->lplight.update(state.light);
     //this->state.fhumidity=this->lphumidity.update(state.humidity);
-///Actuators updating--------------------------------------------------------------------------
+//Actuators updating--------------------------------------------------------------------------
     int ret;
     state.eactuators=0;
     //-----------------------------------------------------------------------------
-    //Verify DHT11 state--------------------------------------------------------------------------------
+    ///Verify DHT11 state
     //If sensor major error occurred
     if(state.esensors&State::ESENS_DHTERR)
     {
-        ///Emergency suspend function=================================================================
+        //Emergency suspend function=================================================================
         //Shut down both heater and humidifier
         this->heater.forceOff();
         this->heatcable.forceOff();
@@ -93,7 +95,7 @@ int SGH::updateSTD()
         this->outFan.stop();
         //Add log
         this->log(SGH::CRITICAL,"DHT Major error. Shutting down all actuators");
-        ///=============================================================================================
+        //=============================================================================================
     }
     //----------------------------------------------------------------------------------------------------
     else
@@ -119,7 +121,7 @@ int SGH::updateSTD()
 #endif
     }
 
-    //Full power if > 30°
+    ///Fan to Full power if > 30°
     if(state.temp>30)
         state.outFan=outFan.setSpeed(255);
     else
@@ -140,25 +142,29 @@ int SGH::updateSTD()
 
 }
 
-/** @brief init
+/** @brief Standard Init
   *
-  * @todo: document this function
+  * Standard initialization
+  * To be used only with updateSTD
   */
 int SGH::initSTD()
 {
     Serial.print("Setup...");
-///State setup----------------------------
+//State setup----------------------------
+    ///Init log to SDPIN.
     logInit(SDPIN);
 
-///Sensors Setup---------------------------------------------------------------------------------------
+//Sensors Setup---------------------------------------------------------------------------------------
+    ///Setup level sensor on LEVELPIN
     pinMode(LEVELPIN,INPUT);
+    ///Attach DHT DHTTYPE on DHTPIN
     this->attachDHT(DHTPIN,DHTTYPE);
     //Filter definition
     //this->lplight.setup(LIGHTTAU);
     //this->lphumidity.setup(HUMIDITYTAU);
 
-///Actuators---------------------------------------------------------------------------------------------
-///MaxOn, MinOn, MaxOff,MinOff
+//Actuators---------------------------------------------------------------------------------------------
+//Order: MaxOn, MinOn, MaxOff,MinOff
     this->heater.init(HEATPIN,300,60,0,60); //Heater setup
     this->humidifier.init(HUMPIN,0,60,0,60);  //Humidifier pin
     this->heatcable.init(HEATCABLEPIN,0,60,0,0);
@@ -169,10 +175,10 @@ int SGH::initSTD()
 
     outFan.setup(OUTFPIN,45,255,600,18000);
 
-///Parameter definition
-///Heater 18°+-3
-///Humidifier 35+-10
-///Heat cable 25+-5
+///Parameter definition:
+///Heater 18°+-3;<br>
+///Humidifier 35+-10;<br>
+///Heat cable 25+-5;<br>
     t.setup(18,6,1);//Set temperature maximum variation around target
 
 #ifdef HUMCONTROLLED
