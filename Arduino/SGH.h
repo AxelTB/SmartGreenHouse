@@ -36,7 +36,7 @@ public:
     ///Update the system following the standard behaviour
     int updateSTD();
     ///Standard destructor
-    //~SGH();
+    ~SGH();
 //Public methods----------------------------------------
 ///Update system according to configured modules
     int update();
