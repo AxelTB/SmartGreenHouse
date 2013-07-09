@@ -5,6 +5,11 @@ Smart Greenhouse designed for urban garden.
 Created for Arduino using a DHT temperature and humidity sensor.
 A fan, a humidifier and two heater (With a relay pack) are currently working of the full version.
 
+Documentation
+=============
+The full documentation is in the Doc/rtf/rtfman.rtf file.
+Doxyfile is on the main path of the repo, using it you can obtain the html version.
+
 Branches
 ========
 The master contains the prototype code.
