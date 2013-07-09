@@ -9,38 +9,30 @@
  *   License: CC BY-SA 3.0
  *            http://creativecommons.org/licenses/by-sa/3.0/
  *=====================================================================
+ * @brief Full version prototype.
+ *	Demonstrate the use of all implemented modules. Use implemented SGH state variable, dht and log. All other modules are used as they are.
  * All available documentation on https://github.com/AxelTB/SmartGreenHouse
  ********************************************************************/
 #include <SGH.h>
 
 ///Sensors defines---------------------------------
-#define DHTPIN 8
-#define DHTTYPE DHT11
+#define DHTPIN 8 ///Dht Arduino Pin
+#define DHTTYPE DHT11 ///DHT Type
 
-#define LEVELPIN 5
-#define LIGHTAPIN 0
-
-#define LIGHTTAU 10
-#define HUMIDITYTAU 120
-
-#define GOODLEVEL HIGH
+#define LEVELPIN 5 ///Umidifier water level pin
+#define GOODLEVEL HIGH ///Pin state if water level is good
 
 //Actuators Defines------------------------------------------------
-#define HEATPIN 2
-#define HUMPIN 3
-#define HEATCABLEPIN 4
-#define OUTFPIN   10
+#define HEATPIN 2 ///Heater pin
+#define HUMPIN 3 ///Humidifier pin
+#define HEATCABLEPIN 4 ///Heat cable pin
+#define OUTFPIN   10 ///Out fan pwm pin
 
 #define FANT 25 ///Fan target temperature
 #define FANP 3 ///Fan proportional term
 
-#define HUMCONTROLLED
-
 #define HCDELTA 4
-
 #define MAXTEMP 40 ///Maximum temperature allowed for the system
-
-
 
 long time;
     //Sensors variables----------------
@@ -67,15 +59,11 @@ void setup()
     pinMode(LEVELPIN,INPUT);
     ///Attach DHT DHTTYPE on DHTPIN
     sgh.attachDHT(DHTPIN,DHTTYPE);
-    //Filter definition
-    //sgh.lplight.setup(LIGHTTAU);
-    //sgh.lphumidity.setup(HUMIDITYTAU);
-
 //Actuators-------------------------
 //Order: MaxOn, MinOn, MaxOff,MinOff
     heater.init(HEATPIN,300,60,0,60); //Heater setup
     humidifier.init(HUMPIN,0,60,0,60);  //Humidifier pin
-    heatcable.init(HEATCABLEPIN,0,60,0,0);
+    heatcable.init(HEATCABLEPIN,0,60,0,0); ///Heat cable setup
 
     //Fan 27 mq/h
     //1 mq/20min = 30 pwm ->
@@ -89,13 +77,7 @@ void setup()
 ///Heat cable 25+-5;<br>
     t.setup(18,6,1);//Set temperature maximum variation around target
 
-#ifdef HUMCONTROLLED
-    //Controlled  humidifier version
-    h.setup(35,20,1);
-#else
-    //Timered Humidifier version
-    cth=ControlTimer(600000,240000);
-#endif
+    h.setup(35,20,1); ///Humidifier setup
     //Heat cable
     tc.setup(25,10,1);
 
@@ -108,7 +90,7 @@ void setup()
 void loop()
 {
   //sgh.updateSTD();-----------------------------------------------------------
-  //Sensors updating-------------------------------------------------------------------------------
+  //Sensors updating---------
     sgh.updateDHT();
     ///Set level according to level sensor
     if(!(digitalRead(LEVELPIN)==GOODLEVEL) && sgh.state.level)
