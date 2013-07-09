@@ -21,7 +21,7 @@
 //Saved defines---------------
 #define DHTMAXERRN 5
 /**
-* @brief Higher level interface
+* @brief Higher level interface.
 *   Provide function to set simple behaviour for the SmartGreenHouse system.
 *
 *

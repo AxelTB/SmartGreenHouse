@@ -14,6 +14,12 @@ Implements an air circle routine.
 #define FAN_H
 #include <Arduino.h>
 
+/**
+* @brief Fan module.
+*   Provides function to control a dc fan trought a PWM output.
+*
+*
+*/
 class Fan
 {
 public:
