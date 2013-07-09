@@ -13,34 +13,9 @@
 #include "SGH.h"
 
 
-///Sensors defines---------------------------------
-#define DHTPIN 8
-#define DHTTYPE DHT11
 
-#define LEVELPIN 5
-#define LIGHTAPIN 0
 
-#define LIGHTTAU 10
-#define HUMIDITYTAU 120
-
-#define GOODLEVEL HIGH
-
-//Actuators Defines------------------------------------------------
-#define HEATPIN 2
-#define HUMPIN 3
-#define HEATCABLEPIN 4
-#define OUTFPIN   10
-
-#define FANT 25 ///Fan target temperature
-#define FANP 3 ///Fan proportional term
-
-#define HUMCONTROLLED
-
-#define HCDELTA 4
-
-#define MAXTEMP 40///Maximum temperature allowed for the system
-
-//Modular methods
+//Modular methods------------------------------------------------------------------
 
 int SGH::update()
 {
@@ -71,7 +46,7 @@ int SGH::updateSTD()
 
 }
 
-/** @brief Standard Init
+/** @brief Standard Init (OBSOLETE)!!!
   *
   * Standard initialization
   * To be used only with updateSTD

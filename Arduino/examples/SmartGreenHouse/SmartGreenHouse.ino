@@ -13,30 +13,69 @@
  ********************************************************************/
 #include <SGH.h>
 
-SGH sgh;
-long time;
+///Sensors defines---------------------------------
+#define DHTPIN 8
+#define DHTTYPE DHT11
 
+#define LEVELPIN 5
+#define LIGHTAPIN 0
+
+#define LIGHTTAU 10
+#define HUMIDITYTAU 120
+
+#define GOODLEVEL HIGH
+
+//Actuators Defines------------------------------------------------
+#define HEATPIN 2
+#define HUMPIN 3
+#define HEATCABLEPIN 4
+#define OUTFPIN   10
+
+#define FANT 25 ///Fan target temperature
+#define FANP 3 ///Fan proportional term
+
+#define HUMCONTROLLED
+
+#define HCDELTA 4
+
+#define MAXTEMP 40 ///Maximum temperature allowed for the system
+
+
+
+long time;
+    //Sensors variables----------------
+    DHT dht; ///DHT Sensor
+    unsigned short dhterrN;
+    //Actuators Variables--------------
+    DigitalOut heater,
+    humidifier,
+    heatcable;
+    Comparator t,tc;
+    Comparator h;
+    Fan outFan;
+
+SGH sgh;
 void setup()
 {
       Serial.print("Setup...");
 //sgh.initSTD();----------------------------------------------
     ///Init log to SDPIN.
-    logInit(SDPIN);
+    sgh.logInit(SDPIN);
 
 //Sensors Setup------------------
     ///Setup level sensor on LEVELPIN
     pinMode(LEVELPIN,INPUT);
     ///Attach DHT DHTTYPE on DHTPIN
-    this->attachDHT(DHTPIN,DHTTYPE);
+    sgh.attachDHT(DHTPIN,DHTTYPE);
     //Filter definition
-    //this->lplight.setup(LIGHTTAU);
-    //this->lphumidity.setup(HUMIDITYTAU);
+    //sgh.lplight.setup(LIGHTTAU);
+    //sgh.lphumidity.setup(HUMIDITYTAU);
 
 //Actuators-------------------------
 //Order: MaxOn, MinOn, MaxOff,MinOff
-    this->heater.init(HEATPIN,300,60,0,60); //Heater setup
-    this->humidifier.init(HUMPIN,0,60,0,60);  //Humidifier pin
-    this->heatcable.init(HEATCABLEPIN,0,60,0,0);
+    heater.init(HEATPIN,300,60,0,60); //Heater setup
+    humidifier.init(HUMPIN,0,60,0,60);  //Humidifier pin
+    heatcable.init(HEATCABLEPIN,0,60,0,0);
 
     //Fan 27 mq/h
     //1 mq/20min = 30 pwm ->
@@ -70,80 +109,80 @@ void loop()
 {
   //sgh.updateSTD();-----------------------------------------------------------
   //Sensors updating-------------------------------------------------------------------------------
-    this->updateDHT();
+    sgh.updateDHT();
     ///Set level according to level sensor
-    if(!(digitalRead(LEVELPIN)==GOODLEVEL) && this->state.level)
+    if(!(digitalRead(LEVELPIN)==GOODLEVEL) && sgh.state.level)
     {
         //Level just went low
-        this->log(SGH::ERROR,"Low Water level");
+        sgh.log(SGH::ERROR,"Low Water level");
     }
-    this->state.level=(digitalRead(LEVELPIN)==GOODLEVEL);
+    sgh.state.level=(digitalRead(LEVELPIN)==GOODLEVEL);
     //Read Light sensor----------------------------------------------------
-    //this->state.light=analogRead(LIGHTAPIN);
+    //state.light=analogRead(LIGHTAPIN);
     //Filtered variables
-    //this->state.flight=this->lplight.update(state.light);
-    //this->state.fhumidity=this->lphumidity.update(state.humidity);
+    //state.flight=lplight.update(state.light);
+    //state.fhumidity=lphumidity.update(state.humidity);
 //Actuators updating--------------------------------------------------------------------------
     int ret;
-    state.eactuators=0;
+    sgh.state.eactuators=0;
     //-----------------------------------------------------------------------------
     ///Verify DHT11 state
     //If sensor major error occurred
-    if(state.esensors&State::ESENS_DHTERR)
+    if(sgh.state.esensors&State::ESENS_DHTERR)
     {
         //Emergency suspend function=================================================================
         //Shut down both heater and humidifier
-        this->heater.forceOff();
-        this->heatcable.forceOff();
-        this->humidifier.forceOff();
+        heater.forceOff();
+        heatcable.forceOff();
+        humidifier.forceOff();
         //Stop Fan
-        this->outFan.stop();
+        outFan.stop();
         //Add log
-        this->log(SGH::CRITICAL,"DHT Major error. Shutting down all actuators");
+        sgh.log(SGH::CRITICAL,"DHT Major error. Shutting down all actuators");
         //=============================================================================================
     }
     //----------------------------------------------------------------------------------------------------
     else
     {
         //Heater------------------------------------------------------------------------------------------------
-        bool dbgctrl=t.update(state.temp);
+        bool dbgctrl=t.update(sgh.state.temp);
         //Serial.print("H:");
         //Serial.println(dbgctrl);
-        state.heater = this->heater.set(dbgctrl);
+        sgh.state.heater = heater.set(dbgctrl);
 
         //Heat Cable------------------------------------------------------
-        state.heaterCable=this->heatcable.set(tc.update(state.temp));
+        sgh.state.heaterCable=heatcable.set(tc.update(sgh.state.temp));
 
         //Humidifier------------------------------------------------------
 #ifdef HUMCONTROLLED
         //If water level is not good shut down humidifier
-        if(state.level==0)
-            state.humidifier=this->humidifier.off();
+        if(sgh.state.level==0)
+            sgh.state.humidifier=humidifier.off();
         //or evaluate status
         else
-            state.humidifier=this->humidifier.set(h.update(state.humidity));
+            sgh.state.humidifier=humidifier.set(h.update(sgh.state.humidity));
 
 #endif
     }
 
     ///Fan to Full power if > MAXTEMP
-    if(state.temp>MAXTEMP)
-        state.outFan=outFan.setSpeed(255);
+    if(sgh.state.temp>MAXTEMP)
+        sgh.state.outFan=outFan.setSpeed(255);
     else
     {
         //Evaluate distance from higher point
-        float ferror=state.temp-FANT;
+        float ferror=sgh.state.temp-FANT;
         float kc=FANP;
 
         if(ferror>0)
-            state.outFan=outFan.setSpeed(kc*ferror);
+            sgh.state.outFan=outFan.setSpeed(kc*ferror);
         else
-            state.outFan=outFan.setSpeed(0);
+            sgh.state.outFan=outFan.setSpeed(0);
     }
 ///-----------------------------------------------------------------------------------------------------
 
     //SD Log -------------------------------------------
-    this->saveStats();
+    sgh.saveStats();
 
   //---------------------------------------------------------------------------
   //Wait for looptime---------------------------------------------
