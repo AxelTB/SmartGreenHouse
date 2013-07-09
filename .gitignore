@@ -1,2 +1,4 @@
 *.cbp
-Doc/*
+Doc/html/*
+Doc/rtf/*.png
+Doc/rtf/*.md5
