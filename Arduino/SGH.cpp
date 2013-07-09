@@ -74,7 +74,7 @@ int SGH::updateSTD()
     }
     this->state.level=(digitalRead(LEVELPIN)==GOODLEVEL);
     //Read Light sensor----------------------------------------------------
-    this->state.light=analogRead(LIGHTAPIN);
+    //this->state.light=analogRead(LIGHTAPIN);
     //Filtered variables
     //this->state.flight=this->lplight.update(state.light);
     //this->state.fhumidity=this->lphumidity.update(state.humidity);
