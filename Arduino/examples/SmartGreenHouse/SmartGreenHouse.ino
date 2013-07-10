@@ -60,15 +60,28 @@ void setup()
     ///Attach DHT DHTTYPE on DHTPIN
     sgh.attachDHT(DHTPIN,DHTTYPE);
 //Actuators-------------------------
-//Order: MaxOn, MinOn, MaxOff,MinOff
+///Set the maximum time for the digital actuators
+//Parameter Order (Time in seconds): MaxOn, MinOn, MaxOff,MinOff
     heater.init(HEATPIN,300,60,0,60); //Heater setup
     humidifier.init(HUMPIN,0,60,0,60);  //Humidifier pin
     heatcable.init(HEATCABLEPIN,0,60,0,0); ///Heat cable setup
 
-    //Fan 27 mq/h
+    //Fan 27 mq/h -> 0.0075 m^3/sec
     //1 mq/20min = 30 pwm ->
     //Simple temperature control
-
+/***
+* Fan Setup:
+* pin: OUTFPIN
+* minPwm: 45
+* maxPwm: 255
+* airCircleLoopT: 1200 (20 min)
+* airCircleCoefficient: 16320
+*
+* airCircleCoefficient example:
+* Test fan 27 m^3/h at maximum power
+* Desired airflow 0.5 m^3 / 20 min    0.0004 m^3/s
+* airCicleCoefficient (DesiredAirflow/FanAirflow*255*airCircleLoopT) 0.0004/0.0075*255*1200=16320
+***/
     outFan.setup(OUTFPIN,45,255,600,18000);
 
 ///Parameter definition:
