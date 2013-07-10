@@ -23,7 +23,7 @@
 #define GOODLEVEL HIGH ///Pin state if water level is good
 
 //Actuators Defines------------------------------------------------
-#define HEATPIN 2 ///Heater pin
+//#define HEATPIN 2 ///Heater pin
 #define HUMPIN 3 ///Humidifier pin
 #define HEATCABLEPIN 4 ///Heat cable pin
 #define OUTFPIN   10 ///Out fan pwm pin
@@ -39,10 +39,11 @@ long time;
     DHT dht; ///DHT Sensor
     unsigned short dhterrN;
     //Actuators Variables--------------
-    DigitalOut heater,
+    DigitalOut //heater,
     humidifier,
     heatcable;
-    Comparator t,tc;
+    Comparator //t,
+    tc;
     Comparator h;
     Fan outFan;
 
@@ -62,13 +63,10 @@ void setup()
 //Actuators-------------------------
 ///Set the maximum time for the digital actuators
 //Parameter Order (Time in seconds): MaxOn, MinOn, MaxOff,MinOff
-    heater.init(HEATPIN,300,60,0,60); //Heater setup
+    //heater.init(HEATPIN,300,60,0,60); //Heater setup
     humidifier.init(HUMPIN,0,60,0,60);  //Humidifier pin
     heatcable.init(HEATCABLEPIN,0,60,0,0); ///Heat cable setup
 
-    //Fan 27 mq/h -> 0.0075 m^3/sec
-    //1 mq/20min = 30 pwm ->
-    //Simple temperature control
 /***
 * Fan Setup:
 * pin: OUTFPIN
@@ -84,18 +82,16 @@ void setup()
 ***/
     outFan.setup(OUTFPIN,45,255,600,18000);
 
+
 ///Parameter definition:
 ///Heater 18°+-3;<br>
 ///Humidifier 35+-10;<br>
-///Heat cable 25+-5;<br>
-    t.setup(18,6,1);//Set temperature maximum variation around target
+///Heat cable 18+-3;<br>
+//    t.setup(18,6,1);//Set temperature maximum variation around target
 
     h.setup(35,20,1); ///Humidifier setup
     //Heat cable
     tc.setup(25,10,1);
-
-    //Serial.println("DONE!");
-
     //-------------------------------------------------------------------------
   time=millis();
 }
@@ -119,7 +115,10 @@ void loop()
     //state.fhumidity=lphumidity.update(state.humidity);
 //Actuators updating--------------------------------------------------------------------------
     int ret;
+
+    ///Reset Actuators previous errors
     sgh.state.eactuators=0;
+
     //-----------------------------------------------------------------------------
     ///Verify DHT11 state
     //If sensor major error occurred
@@ -127,7 +126,7 @@ void loop()
     {
         //Emergency suspend function=================================================================
         //Shut down both heater and humidifier
-        heater.forceOff();
+        //heater.forceOff();
         heatcable.forceOff();
         humidifier.forceOff();
         //Stop Fan
@@ -140,24 +139,22 @@ void loop()
     else
     {
         //Heater------------------------------------------------------------------------------------------------
-        bool dbgctrl=t.update(sgh.state.temp);
+        //bool dbgctrl=t.update(sgh.state.temp);
         //Serial.print("H:");
         //Serial.println(dbgctrl);
-        sgh.state.heater = heater.set(dbgctrl);
+        //sgh.state.heater = heater.set(dbgctrl);
 
         //Heat Cable------------------------------------------------------
+        ///Update heatclable accordingly to state temperature and save output in state
         sgh.state.heaterCable=heatcable.set(tc.update(sgh.state.temp));
 
         //Humidifier------------------------------------------------------
-#ifdef HUMCONTROLLED
         //If water level is not good shut down humidifier
         if(sgh.state.level==0)
             sgh.state.humidifier=humidifier.off();
         //or evaluate status
         else
             sgh.state.humidifier=humidifier.set(h.update(sgh.state.humidity));
-
-#endif
     }
 
     ///Fan to Full power if > MAXTEMP
@@ -174,12 +171,10 @@ void loop()
         else
             sgh.state.outFan=outFan.setSpeed(0);
     }
-///-----------------------------------------------------------------------------------------------------
 
     //SD Log -------------------------------------------
     sgh.saveStats();
 
-  //---------------------------------------------------------------------------
   //Wait for looptime---------------------------------------------
   while(millis()-time<LOOPT*1000);
   time=millis();
