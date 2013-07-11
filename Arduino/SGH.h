@@ -31,10 +31,6 @@ class SGH
 public:
     ///Standard Constructor
     SGH();
-    ///Initialize the standard behaviour
-    int initSTD();
-    ///Update the system following the standard behaviour
-    int updateSTD();
     ///Standard destructor
     ~SGH();
 //Public methods----------------------------------------
@@ -55,20 +51,14 @@ public:
     static const unsigned short INFORMATION=1;
     static const unsigned short DEBUG=0;
 //------------------------------------------------------
+State state; //Until transition to modular complete
 protected:
-    State state;
+
 private:
 
     //Sensors variables----------------
     DHT dht; ///DHT Sensor
     unsigned short dhterrN;
-    //Actuators Variables--------------
-    DigitalOut heater,
-    humidifier,
-    heatcable;
-    Comparator t,tc;
-    Comparator h;
-    Fan outFan;
 };
 
 #endif // SGH_H
