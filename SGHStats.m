@@ -2,21 +2,22 @@
 
 close all, clear all
 %file='../SmartGreenHouse_data/last/TotTemp';
-file='../SmartGreenHouse_data/Debug/T4';
+file='../SmartGreenHouse/DATA.TXT';
 
 data=load(file);
 
 %Parameters
 heaterD=3;
 heaterT=18;
-hcableD=5;
-hcableT=25;
+hcableD=3;
+hcableT=18;
 humidifierD=10;
 humidifierT=35;
 
 pend=length(data);
 pstart=1;
 %Time
+
 time=(pstart:pend)/3600*2;
 %time=(pstart:pend).*2;
 
