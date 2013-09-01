@@ -51,7 +51,7 @@ public:
     static const unsigned short INFORMATION=1;
     static const unsigned short DEBUG=0;
 //------------------------------------------------------
-State state; //Until transition to modular complete
+State state;
 protected:
 
 private:

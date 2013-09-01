@@ -17,7 +17,6 @@ State::State()
   this->eactuators=0;
 
   this->heater=0;
-  this->heaterCable=0;
   this->humidifier=0;
   this->outFan=255;
 

@@ -15,34 +15,20 @@
 #include <Arduino.h>
 
 #define LOOPT 2 //Loop Time
-#define SDPIN 9 //ALSO 11,12 and 13
 
-
-/* UNUSED
-//Target temperature and humidity
-#define TTEMP 20
-#define TDELTA 8
-
-#define THUM  40
-#define HDELTA 10
-*/
 class State
 {
 public:
 State();
-  //Target variable in common and differential
-  //int tTempc, tTempd;
-  //int tHumc, tHumd;
   //Actuators---------------
   boolean heater, /**Heater status*/
-  humidifier,      /**Humidifier status*/
-  heaterCable;  /**Heat Cable status*/
+  humidifier;      /**Humidifier status*/
+
 
   unsigned short outFan; /**Fan power (0-255)*/
   //State variable----------
   float temp, /**Temperature*/
   humidity; /***Humidity*/
-  //short light; /**Light. Unused*/
   boolean level; /**Humidifier water sensor level status*/
 
   //Errors variable---------
@@ -65,7 +51,7 @@ State();
   static const byte EACT_BHO=0b1;
 
 
-    bool serialOut;
+    bool serialOut; ///Serial output active flag
 protected:
 
 private:
