@@ -114,7 +114,7 @@ int Log::init(uint8_t sdPin,int baudrate)
         Serial.println("Serial Setup done");
     }
 
-    return this->state.sdstatus;
+    return this->sdstatus;
 }
 /** @brief operator<<
   *

@@ -1,6 +1,6 @@
 #ifndef LOG_H
 #define LOG_H
-#include "loop.h"
+#include "Loop.h"
 #include <SD.h>
 class Log : public SDClass
 {
@@ -14,6 +14,8 @@ class Log : public SDClass
         /** Default destructor */
         virtual ~Log();
     protected:
+    bool sdstatus;
+    int baudrate;
     private:
 };
 

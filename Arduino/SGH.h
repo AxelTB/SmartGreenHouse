@@ -35,8 +35,8 @@ public:
     ~SGH();
 
 //Sensors method (Implemented in Sensors.cpp)
-    int attachDHT(uint8_t pin,uint8_t type); ///Attach new DHT
-    int updateDHT(); ///Update status according to DHT measurements (Obsolete)
+    //int attachDHT(uint8_t pin,uint8_t type); ///Attach new DHT
+    //int updateDHT(); ///Update status according to DHT measurements (Obsolete)
 
 /*//Log methods----------------------------------------------------------------------
     int logInit(uint8_t sdPin,bool serialOut=true); ///Initialize sd & logging on defined pin
@@ -53,8 +53,8 @@ protected:
 
 private:
     //Sensors variables----------------
-    DHT dht; ///DHT Sensor
-    unsigned short dhterrN;
+    //DHT dht; ///DHT Sensor
+    //unsigned short dhterrN;
 };
 
 #endif // SGH_H
