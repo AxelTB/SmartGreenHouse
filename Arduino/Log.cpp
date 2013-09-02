@@ -25,16 +25,11 @@ if(this->state.serialOut)
 {
     Serial.print(this->state.temp);
     Serial.print(",");
-    Serial.print(this->state.heater);
-    Serial.print(",");
     Serial.print(this->state.humidity);
     Serial.print(",");
+    Serial.print(this->state.heater);
+    Serial.print(",");
     Serial.print(this->state.humidifier);
-    Serial.print(",");
-    Serial.print(this->state.heaterCable);
-    Serial.print(",");
-    //Serial.print(this->state.light);
-    Serial.print("666");//Temporary bho
     Serial.print(",");
     Serial.print(this->state.outFan);
     Serial.println();
@@ -54,25 +49,18 @@ if(this->state.serialOut)
         return -1;
     }
 
-
-    myFile.print(this->state.temp);
-    myFile.print(",");
-    myFile.print(this->state.heater);
-    myFile.print(",");
-    myFile.print(this->state.humidity);
-    myFile.print(",");
-    myFile.print(this->state.humidifier);
-    myFile.print(",");
-    myFile.print(this->state.heaterCable);
-    myFile.print(",");
-    //myFile.print(this->state.light);
-    myFile.print(666);
-    myFile.print(",");
-    myFile.print(this->state.outFan);
-    myFile.println();
-    myFile.close();
-    //Serial out---------------------------------------
-
+#define Serial myFile //Extremely lazy define
+    Serial.print(this->state.temp);
+    Serial.print(",");
+    Serial.print(this->state.humidity);
+    Serial.print(",");
+    Serial.print(this->state.heater);
+    Serial.print(",");
+    Serial.print(this->state.humidifier);
+    Serial.print(",");
+    Serial.print(this->state.outFan);
+    Serial.println();
+#undef Serial
 
     return 0;
 }

@@ -40,6 +40,7 @@ public:
     bool set(uint8_t value);
     inline bool set(bool value);
     bool get();
+    bool isNull();
 //Emergency routine
     void forceOff();
 protected:

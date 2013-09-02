@@ -171,13 +171,14 @@ DigitalOut::DigitalOut(uint8_t pin)
     init(pin);
 }
 
-/** @brief DigitalOut
+/** @brief DigitalOut null constructor.
+ *  Creates an empty null digital out
  *
- * @todo: document this function
  */
 DigitalOut::DigitalOut()
 {
     this->status=0;
+    this->pin=0xFF;
 }
 
 
@@ -194,6 +195,15 @@ void DigitalOut::forceOff()
     //Set minimum off time
     this->timerMin.set(this->MinOffTime);
     this->timerMax.kill(); //Kill maximum on time
+}
+
+/** @brief Return true if the Digital output is uninitialized
+  *
+  *
+  */
+bool DigitalOut::isNull()
+{
+    return (this->pin == 0xFF);
 }
 
 

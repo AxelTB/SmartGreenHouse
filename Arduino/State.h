@@ -29,7 +29,7 @@ State();
   //State variable----------
   float temp, /**Temperature*/
   humidity; /***Humidity*/
-  boolean level; /**Humidifier water sensor level status*/
+//  boolean level; /**Humidifier water sensor level status*/
 
   //Errors variable---------
   byte esensors,    /**Sensors error byte*/
