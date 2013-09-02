@@ -40,14 +40,8 @@ public:
 //Sensors method (Implemented in Sensors.cpp)
     int attachDHT(uint8_t pin,uint8_t type); ///Attach new DHT
     int updateDHT(); ///Update status according to DHT measurements (Obsolete)
-//Actuator methods
-    //Humidifier
-    int attachHumidifier(uint8_t pin,uint8_t lowTH,uint8_t highTH,int minTransitionSec=60); ///Attach new Humidifier
-    int updateHumidifier();
-    //Heater
-    int attachHeater(uint8_t pin,uint8_t lowTH,uint8_t highTH,int minTransitionSec=60); ///Attach new Heater
-    int updateHeater();
-//Log methods----------------------------------------------------------------------
+
+/*//Log methods----------------------------------------------------------------------
     int logInit(uint8_t sdPin,bool serialOut=true); ///Initialize sd & logging on defined pin
     int saveStats(); ///Save statistics
     int log(byte level,char *data); ///Log char string (On log.txt file)
@@ -57,14 +51,10 @@ public:
     static const unsigned short INFORMATION=1;
     static const unsigned short DEBUG=0;
 //------------------------------------------------------
-State state;
+State state;*/
 protected:
 
 private:
-//Actuator variables
-DigitalOut heater,humidifier;
-//Control variable
-
     //Sensors variables----------------
     DHT dht; ///DHT Sensor
     unsigned short dhterrN;
