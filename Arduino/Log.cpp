@@ -116,13 +116,13 @@ int Log::init(uint8_t sdPin,int baudrate)
 
     return this->sdstatus;
 }
-/** @brief operator<<
+/** @brief Sets loop's state variable according to var
   *
-  * @todo: document this function
+  *
   */
 int Log::operator<<(int var)
 {
-
+    this->var=var;
 }
 
 /** @brief operator<<

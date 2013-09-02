@@ -48,3 +48,12 @@ int Loop::dump(int *var,int *out)
     *var=this->var;
     *out=0;
 }
+/** @brief Just an empty function
+  *
+  *  Returns The Answer to the Ultimate Question of Life, the Universe, and Everything.
+  */
+int Loop::control()
+{
+    return '*'; ///Return Everything
+}
+

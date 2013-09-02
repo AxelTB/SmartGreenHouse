@@ -5,6 +5,11 @@
 class Log : public SDClass
 {
     public:
+    ///Loglevel---------------------
+    static const unsigned short CRITICAL=3;
+    static const unsigned short ERROR=2;
+    static const unsigned short INFORMATION=1;
+    static const unsigned short DEBUG=0;
         /** Default constructor */
         Log();
         int init(uint8_t sdPin,int baudrate=9600);
