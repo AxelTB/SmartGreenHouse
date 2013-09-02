@@ -17,19 +17,6 @@
 
 //Modular methods------------------------------------------------------------------
 
-int SGH::update()
-{
-/** @brief Update SmartGreenHouse
-  *
-  * Returns 0 if everything fine
-  * Update DHT and save statistics
-  */
-    this->updateDHT(); //Update DHT Status
-    if(this->state.sdstatus) //If SD configured
-        this->saveStats(); //Log statistics
-
-    return 0;
-}
 //-------------------------------------------------
 
 SGH::SGH()

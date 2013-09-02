@@ -98,7 +98,7 @@ if(this->state.serialOut)
 }
     return 0;
 }
-
+*/
 /** @brief (one liner)
   *
   * (documentation goes here)
@@ -116,4 +116,31 @@ int Log::init(uint8_t sdPin,int baudrate)
 
     return this->state.sdstatus;
 }
-*/
+/** @brief operator<<
+  *
+  * @todo: document this function
+  */
+int Log::operator<<(int var)
+{
+
+}
+
+/** @brief operator<<
+  *
+  * @todo: document this function
+  */
+int Log::operator<<(const char *str)
+{
+
+}
+
+/** @brief operator<<
+  *
+  * @todo: document this function
+  */
+int Log::operator<<(Loop l)
+{
+
+}
+
+

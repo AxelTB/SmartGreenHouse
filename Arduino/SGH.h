@@ -33,9 +33,6 @@ public:
     SGH();
     ///Standard destructor
     ~SGH();
-//Public methods----------------------------------------
-///Update system according to configured modules
-    int update();
 
 //Sensors method (Implemented in Sensors.cpp)
     int attachDHT(uint8_t pin,uint8_t type); ///Attach new DHT

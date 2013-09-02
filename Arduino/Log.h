@@ -1,8 +1,8 @@
 #ifndef LOG_H
 #define LOG_H
 #include "loop.h"
-
-class Log
+#include <SD.h>
+class Log : public SDClass
 {
     public:
         /** Default constructor */
