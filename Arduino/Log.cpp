@@ -108,11 +108,7 @@ int Log::init(uint8_t sdPin,int baudrate)
     pinMode(10, OUTPUT); //Needed to make sd work
     this->sdstatus=(SD.begin(sdPin)); //Save sd status
 
-    if(this->baudrate!=0)
-    {
-        Serial.begin(baudrate); //Enable Serial Output
-        Serial.println("Serial Setup done");
-    }
+
 
     return this->sdstatus;
 }
@@ -122,11 +118,7 @@ int Log::init(uint8_t sdPin,int baudrate)
   */
 int Log::operator<<(int var)
 {
-    if(this->sdstatus)
-    {
-        print(var);
-        print(" ");
-    }
+
 }
 
 /** @brief operator<<

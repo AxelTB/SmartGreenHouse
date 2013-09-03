@@ -2,6 +2,7 @@
 #define LOG_H
 #include "Loop.h"
 #include <SD.h>
+#incluse "SGHWriter.h"
 class Log : public SDClass
 {
     public:
@@ -19,8 +20,7 @@ class Log : public SDClass
         /** Default destructor */
         virtual ~Log();
     protected:
-    bool sdstatus;
-    int baudrate;
+    SGHWriter w;
     private:
 };
 
