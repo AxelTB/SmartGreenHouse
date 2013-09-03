@@ -17,8 +17,8 @@ SGHPID::SGHPID()
 int SGHPID::update(double error)
 {
 
-    double diff=(error-this->lastErr)*((double)this->tc.getElapsedMillis/1000); ///Evaluate D
-    this->lastErr=err; ///Save current error
+    double diff=(error-this->lastErr)*((double)this->tc.getElapsedMillis()/1000); ///Evaluate D
+    this->lastErr=error; ///Save current error
 
     this->sumErr+=error; ///Sum current error to I
 

@@ -19,6 +19,6 @@
 #include "Comparator.h"
 #include "Fan.h"
 #include "DigitalLoop.h"
-#include "Log.h"
+#include "Logger/Log.h"
 
 #endif // SGH_H

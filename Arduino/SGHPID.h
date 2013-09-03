@@ -16,6 +16,7 @@ class SGHPID
     protected:
     TimeCounter tc;
     double lastErr,sumErr;
+    double kp,ki,kd,maxI;
     private:
 };
 
