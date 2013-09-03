@@ -9,16 +9,26 @@
  * Log
  *
  ********************************************************************/
+#include "Log.h"
 
-#include <SGH.h>
-#include <SD.h>
+Log::Log()
+{
+    //ctor
+}
+
+Log::~Log()
+{
+    //dtor
+}
+
+
 
 /***
  * Return:
  * 0 -> OK
  * -1 -> File Error
  * 1 -> Sd not initialized
- */
+
 int SGH::saveStats()
 {
 if(this->state.serialOut)
@@ -88,23 +98,53 @@ if(this->state.serialOut)
 }
     return 0;
 }
-
+*/
 /** @brief (one liner)
   *
   * (documentation goes here)
   */
-int SGH::logInit(uint8_t sdPin,bool serialOut)
+int Log::init(uint8_t sdPin,int baudrate)
 {
     pinMode(10, OUTPUT); //Needed to make sd work
-    this->state.sdstatus=(SD.begin(sdPin)); //Save sd status
+    this->sdstatus=(SD.begin(sdPin)); //Save sd status
 
-    this->state.serialOut=serialOut; //Save serial output flag
-
-    if(this->state.serialOut)
+    if(this->baudrate!=0)
     {
-        Serial.begin(9600); //Enable Serial Output
+        Serial.begin(baudrate); //Enable Serial Output
         Serial.println("Serial Setup done");
     }
 
-    return this->state.sdstatus;
+    return this->sdstatus;
 }
+/** @brief Sets loop's state variable according to var
+  *
+  *
+  */
+int Log::operator<<(int var)
+{
+    if(this->sdstatus)
+    {
+        print(var);
+        print(" ");
+    }
+}
+
+/** @brief operator<<
+  *
+  * @todo: document this function
+  */
+int Log::operator<<(const char *str)
+{
+
+}
+
+/** @brief operator<<
+  *
+  * @todo: document this function
+  */
+int Log::operator<<(Loop l)
+{
+
+}
+
+

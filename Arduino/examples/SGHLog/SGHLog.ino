@@ -1,3 +1,15 @@
+/*******************************************************************
+  *                   ==SmartGreenHouse==
+  *   SGH Implementation File
+  *   Created: 17/02/2013
+  *   Author:  Ax
+  *   License: CC BY-SA 3.0
+  *            http://creativecommons.org/licenses/by-sa/3.0/
+  	       DHT Code from: ladyada
+  *=====================================================================*
+   *
+    * Contains
+     ********************************************************************/
 #include <SGH.h>
 #include <DHT.h>
 #include <SD.h>
@@ -6,19 +18,31 @@
 #define DHTP 8 		// DHTXX Pin
 #define DELAYSECONDS 2 	//Delay between measurements (Set SGHStats.m accordingly if changed)
 
-SGH sgh; //Create new empty SmartGreenHouse
+DHT dht(DHTP,DHT11);
+Log logger;
 
+Loop lh,lt; ///Fake loops (No out nor control)
 void setup()
 {
-	sgh.logInit(SDP); //Init log module (Serial 9600 baud)
-	//sgh.logInit(SDP,false); //Init log module without serial output
+logger.init(DHTP); ///Initialize with log on serial Serial 9600 baud (std)
+//logger.init(DHTP,115200); ///Initialize with serial log at 115200 baud (Only use baudare compatible with Serial.begin)
+//logger.init(DHTP,0); ///Initialize without serial
 
-	sgh.attachDHT(DHTP,DHT11); //Initialize DHTXX Sensor
-	//sgh.attachDHT(DHTP,DHT22); //DHT22 Version
 }
-
+int h,t;
 void loop()
 {
-	sgh.update(); //Update defined sensor and save data on SD
-	delay(DELAYSECONDS*1000l);
+///Read data from DHT
+h=dht.readHumidity();
+t=dht.readTemperature();
+
+///Save state variable into loop
+lh<<h;
+lt<<t;
+
+///Log loop state (For this kind of loop the output state will always be 0)
+logger<<lt;
+logger<<lh;
+
+delay(DELAYSECONDS*1000l);
 }
