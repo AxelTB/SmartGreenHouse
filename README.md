@@ -1,3 +1,6 @@
+This stuff is pretty obsolete... A good version is coming
+
+
 SmartGreenHouse
 ===============
 
