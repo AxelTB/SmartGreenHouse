@@ -122,7 +122,11 @@ int Log::init(uint8_t sdPin,int baudrate)
   */
 int Log::operator<<(int var)
 {
-    this->var=var;
+    if(this->sdstatus)
+    {
+        print(var);
+        print(" ");
+    }
 }
 
 /** @brief operator<<
