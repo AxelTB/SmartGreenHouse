@@ -10,10 +10,11 @@
  *
  ********************************************************************/
 #include "Log.h"
-
+#include "SerialWriter.h"
+#include "SDWriter.h"
 Log::Log()
 {
-    //ctor
+
 }
 
 Log::~Log()
@@ -21,96 +22,10 @@ Log::~Log()
     //dtor
 }
 
-
-
-/***
- * Return:
- * 0 -> OK
- * -1 -> File Error
- * 1 -> Sd not initialized
-
-int SGH::saveStats()
+void Log::init(uint8_t sdPin,int baudrate)
 {
-if(this->state.serialOut)
-{
-    Serial.print(this->state.temp);
-    Serial.print(",");
-    Serial.print(this->state.humidity);
-    Serial.print(",");
-    Serial.print(this->state.heater);
-    Serial.print(",");
-    Serial.print(this->state.humidifier);
-    Serial.print(",");
-    Serial.print(this->state.outFan);
-    Serial.println();
-}
-    if(!this->state.sdstatus)
-    {
-        Serial.println("SD Error");
-        return 1;
-    }
-
-    File myFile = SD.open("data.txt",FILE_WRITE);
-    if (!myFile)
-    {
-if(this->state.serialOut)
-        Serial.println("Error opening file");
-
-        return -1;
-    }
-
-#define Serial myFile //Extremely lazy define
-    Serial.print(this->state.temp);
-    Serial.print(",");
-    Serial.print(this->state.humidity);
-    Serial.print(",");
-    Serial.print(this->state.heater);
-    Serial.print(",");
-    Serial.print(this->state.humidifier);
-    Serial.print(",");
-    Serial.print(this->state.outFan);
-    Serial.println();
-#undef Serial
-
-    return 0;
-}
-
-int SGH::log(byte level,char *data)
-{
-    if(!this->state.sdstatus)
-        return 1;
-
-    File myFile = SD.open("log.txt",FILE_WRITE);
-    if (!myFile)
-        return -1;
-
-    myFile.print((int) level);
-    myFile.print(",");
-    myFile.println(data);
-
-    myFile.close();
-if(this->state.serialOut)
-{
-
-    Serial.print((int) level);
-    Serial.print(",");
-    Serial.println(data);
-}
-    return 0;
-}
-*/
-/** @brief (one liner)
-  *
-  * (documentation goes here)
-  */
-int Log::init(uint8_t sdPin,int baudrate)
-{
-    pinMode(10, OUTPUT); //Needed to make sd work
-    this->sdstatus=(SD.begin(sdPin)); //Save sd status
-
-
-
-    return this->sdstatus;
+    this->w.addWriter(new SerialWriter(baudrate));
+    this->w.addWriter(new SDWriter(sdPin));
 }
 /** @brief Sets loop's state variable according to var
   *
@@ -139,4 +54,13 @@ int Log::operator<<(Loop l)
 
 }
 
+
+/** @brief Writer adding operator
+  *
+  * Calls the same operator on the writer
+  */
+int Log::operator<<(SGHWriter *w)
+{
+        this->w.addWriter(w); //Add Writer
+}
 

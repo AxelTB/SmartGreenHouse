@@ -9,7 +9,7 @@ class SGHWriter
         SGHWriter();
         virtual int write(int val);
         virtual int write(const char* str);
-        int operator<<(SGHWriter *);
+        int addWriter(SGHWriter *);
     protected:
         SGHWriter *next;
     private:

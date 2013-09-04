@@ -8,9 +8,12 @@ SGHWriter::SGHWriter()
   *
   * @todo: document this function
   */
-int SGHWriter::operator<<(SGHWriter *sghw)
+int SGHWriter::addWriter(SGHWriter *sghw)
 {
-    this->next=sghw;
+    if(this->next==0) //If this is the last
+        this->next=sghw; //Append the new one
+    else
+        this->next->addWriter(sghw); //Not my problem
 
 }
 
@@ -20,7 +23,7 @@ int SGHWriter::operator<<(SGHWriter *sghw)
   */
 int SGHWriter::write(const char* str)
 {
-    return this->next.write(str); ///Write to next target
+    return this->next->write(str); ///Write to next target
 }
 
 /** @brief write
@@ -29,6 +32,6 @@ int SGHWriter::write(const char* str)
   */
 int SGHWriter::write(int val)
 {
-return this->next.write(val); ///Write to next target
+return this->next->write(val); ///Write to next target
 }
 

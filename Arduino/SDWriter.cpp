@@ -7,14 +7,11 @@
 int SDWriter::write(const char* str)
 {
     uint8_t ret=0;
- if(this->status=2)
- {
-    SD.print(val);
-    SD.print(" ");
-}
-else
-ret=1;
-    return ret+this->next.write(val);
+    if(this->status=2)
+        this->fout.write(str);
+    else
+        ret=1;
+    return ret+this->next->write(str);
 }
 
 /** @brief write
@@ -23,8 +20,9 @@ ret=1;
   */
 int SDWriter::write(int val)
 {
-    this->next.write(str);
-    Serial.println(str)
+    this->next->write(val);
+    this->fout.write(val);
+    this->fout.write(" ");
 }
 
 /** @brief SDWriter
