@@ -20,7 +20,7 @@ int SGHWriter::operator<<(SGHWriter *sghw)
   */
 int SGHWriter::write(const char* str)
 {
-    this->next.write(str); ///Write to next target
+    return this->next.write(str); ///Write to next target
 }
 
 /** @brief write
@@ -29,6 +29,6 @@ int SGHWriter::write(const char* str)
   */
 int SGHWriter::write(int val)
 {
-this->next.write(val); ///Write to next target
+return this->next.write(val); ///Write to next target
 }
 
