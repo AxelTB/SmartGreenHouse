@@ -13,7 +13,7 @@ DigitalLoop::~DigitalLoop()
   *
   * @todo: document this function
   */
-int DigitalLoop::operator<<(Comparator comp)
+int DigitalLoop::operator<<(Comparator *comp)
 {
     this->ctrl=comp;
 }
@@ -22,7 +22,7 @@ int DigitalLoop::operator<<(Comparator comp)
   *
   * @todo: document this function
   */
-int DigitalLoop::operator<<(DigitalOut dout)
+int DigitalLoop::operator<<(DigitalOut *dout)
 {
     this->out=dout;
 }
@@ -35,6 +35,6 @@ int DigitalLoop::operator<<(DigitalOut dout)
 int DigitalLoop::dump(int *var,int *out)
 {
     *var=this->var;
-    *out=this->out.get();
+    *out=this->out->get();
 }
 

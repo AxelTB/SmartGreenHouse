@@ -3,10 +3,11 @@
 #include "Loop.h"
 #include <SD.h>
 #include "SGHWriter.h"
-class Log : public SDClass
+#include "DigitalOut.h"
+class Log
 {
     public:
-        /** Default constructor */
+
         Log();
         void init(uint8_t sdPin,int baudrate=9600);
 
@@ -14,10 +15,11 @@ class Log : public SDClass
         int operator<<(Loop l);
         int operator<<(const char *str);
         int operator<<(int var);
-
+        int operator<<(DigitalOut d);
         //Setting function
 
         int operator<<(SGHWriter *w);
+
 
         /** Default destructor */
         virtual ~Log();

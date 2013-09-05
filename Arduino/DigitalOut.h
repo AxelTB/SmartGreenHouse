@@ -19,22 +19,27 @@ Implements various control function and minimum/maximum time control.
 class DigitalOut
 {
 public:
-    DigitalOut();
-    DigitalOut(uint8_t pin);
-    DigitalOut(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MaxOffTimeS, unsigned long MinOffTimeS);
     /***
-    pin -> arduino pin
+    pin -> Arduino pin
     MaxOnTimeS ->Maximum On time sec (0 means infinite)
     MinOnTimeS -> Min On sec
     MinOffTimeS -> Min Off sec
-    forcedOffS -> Time to wait when forced off before accept new command (For cooling or stuff like this)
+    MinOffTimeS -> Min Off sec
     **/
-    inline int init(uint8_t pin);
-    int init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MaxOffTimeS,unsigned long MinOffTimeS);
+    DigitalOut();
+    DigitalOut(uint8_t pin);
+    DigitalOut(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MaxOffTimeS, unsigned long MinOffTimeS);
 
-//Return true if set HIGH false if LOW
+    DigitalOut(uint8_t pin,uint32_t OnTimemS,uint32_t OffTimemS); ///Constructor for simple timed output
+
+    void init(uint8_t pin);
+    void init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MaxOffTimeS,unsigned long MinOffTimeS);
+    void init(uint8_t pin,uint32_t OnTimeS,uint32_t OffTimeS); ///Initialize as simple timed output
+
+///All Return true if set HIGH false if LOW
     bool on();
     bool off();
+    bool commute();
     bool set(int value);
     bool set(short value);
     bool set(uint8_t value);

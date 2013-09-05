@@ -11,7 +11,11 @@ int SDWriter::write(const char* str)
         this->fout.write(str);
     else
         ret=1;
+
+    if(this->next!=0)
     return ret+this->next->write(str);
+    else
+        return 1;
 }
 
 /** @brief write

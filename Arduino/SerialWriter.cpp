@@ -28,9 +28,14 @@ if(baudrate!=0)
   */
 int SerialWriter::write(int val)
 {
-    this->next->write(val);
-    Serial.print(val);
+    Serial.print(val); //Write val
     Serial.print(" ");
+
+    if(this->next!=0)
+    return this->next->write(val);
+    else
+        return 1;
+
 }
 
 /** @brief write
@@ -39,8 +44,11 @@ int SerialWriter::write(int val)
   */
 int SerialWriter::write(const char* str)
 {
-    this->next->write(str);
     Serial.println(str);
+    if(this->next!=0)
+    return 1+this->next->write(str);
+    else
+        return 1;
 }
 
 

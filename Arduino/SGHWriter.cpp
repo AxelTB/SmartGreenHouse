@@ -23,7 +23,10 @@ int SGHWriter::addWriter(SGHWriter *sghw)
   */
 int SGHWriter::write(const char* str)
 {
-    return this->next->write(str); ///Write to next target
+    if(this->next!=0)
+        return this->next->write(str); ///Write to next target
+    else
+        return 0;
 }
 
 /** @brief write

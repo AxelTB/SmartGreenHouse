@@ -10,23 +10,27 @@ Standard digital output.
 Implements various control function and minimum/maximum time control.
 ********************************************************************/
 #include "DigitalOut.h"
-/** @brief set
+/** @brief Set the state of the digital output
  *
- * @todo: document this function
+ * Returns the state of the output
  */
 bool DigitalOut::set(bool value)
 {
     if(!this->timerMin.isElapsed()) //If minimum timer not elapsed
         return this->status; //Just return current status
-    ///****************DGB******************
-    Serial.print("DigitaOut:");
-    Serial.println(value);
+
+    //****************DGB******************
+    //Serial.print("DigitaOut:");
+    //Serial.println(value);
+    //--------------------------------------
     if(value==this->status) //If command not changed
     {
         //Just check maximum timer
         if(this->timerMax.isElapsed()) //If maximum timer elapsed
         {
+            //*******************DBG
             Serial.println("Switch forced") ;
+            //--------------------------
             return set(!this->status); //Switch status
         }
 
@@ -77,6 +81,16 @@ bool DigitalOut::on()
 {
     return set((bool)1);
 }
+/** @brief Commute the out.
+ *
+ * Can be called continuously with OnTime and OffTime set to obtain a simple timed out.
+ */
+bool DigitalOut::commute()
+{
+    return set(!this->status);
+}
+
+
 /** @brief get
  *
  * @todo: document this function
@@ -121,14 +135,14 @@ bool DigitalOut::set(int value)
  *
  * @todo: document this function
  */
-int DigitalOut::init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MaxOffTimeS,unsigned long MinOffTimeS)
+void DigitalOut::init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,unsigned long MaxOffTimeS,unsigned long MinOffTimeS)
 {
     this->init(pin);
     this->MaxOnTime=MaxOnTimeS*1000l;
     this->MaxOnTime=MaxOnTimeS*1000l;
     this->MinOffTime=MinOffTimeS*1000l;
     this->MaxOffTime=MaxOffTimeS*1000l;
-    return 0;
+
 
 }
 
@@ -138,7 +152,7 @@ int DigitalOut::init(uint8_t pin,uint32_t MaxOnTimeS,unsigned long MinOnTimeS,un
  */
 
 
-int DigitalOut::init(uint8_t pin)
+void DigitalOut::init(uint8_t pin)
 {
     this->pin=pin;
     this->MaxOnTime=0;
@@ -147,7 +161,7 @@ int DigitalOut::init(uint8_t pin)
     this->MaxOffTime=0;
 
     this->status=false;
-    this->timerMin.set(5000); //Wait 1 sec before switch
+    this->timerMin.set(1000); //Wait 1 sec before first switch
     this->timerMax.reset(); //No maximum down timer
 
     pinMode(this->pin,OUTPUT);
@@ -206,4 +220,19 @@ bool DigitalOut::isNull()
     return (this->pin == 0xFF);
 }
 
+//Simple timered out mode stuff------------------------------------------------------------------------
 
+DigitalOut::DigitalOut(uint8_t pin, uint32_t OnTimeS, uint32_t OffTimeS)
+{
+    this->init(pin,OnTimeS,OffTimeS);
+}
+/** @brief Initialize for using as very simple timed output.
+  *
+  * Same as setting the minimum timers.
+  */
+void DigitalOut::init(uint8_t pin, uint32_t OnTimemS, uint32_t OffTimemS)
+{
+    this->init(pin);
+    this->MinOffTime=OffTimemS;
+    this->MinOnTime=OnTimemS;
+}

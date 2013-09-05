@@ -33,7 +33,7 @@ void Log::init(uint8_t sdPin,int baudrate)
   */
 int Log::operator<<(int var)
 {
-
+    w.write(var);
 }
 
 /** @brief operator<<
@@ -42,16 +42,28 @@ int Log::operator<<(int var)
   */
 int Log::operator<<(const char *str)
 {
-
+    return this->w.write(str);
 }
 
-/** @brief operator<<
+/** @brief operator<< Loop
   *
-  * @todo: document this function
+  * Log loop state
   */
 int Log::operator<<(Loop l)
 {
+    int var,out;
 
+    l.dump(&var,&out);
+
+    return w.write(out) + w.write(var);
+
+}
+int Log::operator<<(DigitalOut d)
+{
+    if(d.get())
+        return w.write(1);
+    else
+        return w.write(0);
 }
 
 
