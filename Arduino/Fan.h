@@ -48,6 +48,7 @@ public:
   /*** Fan stop
    Stop the fan don't regarding air changing cicle */
   void stop();
+  uint8_t get();
 protected:
 private:
   uint8_t pin; //Fan pin

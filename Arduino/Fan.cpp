@@ -139,4 +139,8 @@ void Fan::stop()
 }
 
 
+uint8_t Fan::get()
+{
+    return this->pwm;
+}
 
