@@ -18,23 +18,28 @@
 #include <DHT.h>
 #include <SD.h>
 #include <SerialWriter.h>
+#include <Fan.h>
 //#define SDP 9  		//SD cs pin
 #define DHTP 7 		// DHTXX Pin
 #define FOGPIN 3        //Relay pin
 #define DELAYSECONDS 2 	//Delay between measurements
+#define FANPIN 10
 
 #define BREAKPOINT while(!Serial.available());
 DHT dht(DHTP,DHT11);
 Log logger;
 
 DigitalOut fog;
+Fan fan;
 void setup()
 {
   logger<<new SerialWriter(); //Hardware seria logger
   //logger.init(SDP,115200); ///Initialize with serial log at 115200 baud (Only use baudare compatible with Serial.begin)
   //logger.init(SDP); ///Initialize without serial
 
-  fog.init(FOGPIN,5000,60000); //Init digital out
+  fog.init(FOGPIN,30000,60000); //Init digital out
+  fan.setup(FANPIN,45,255);
+  fan.setSpeed(0); //Just use the fresh air circle
   Serial.println("Setup complete"); //After the creation of a SerialWriter you can still use the Serial instance as usual
 }
 int h,t;
@@ -50,6 +55,7 @@ void loop()
   logger<<t; //Temperature
   logger<<h; //And humidity 
   logger<<fog; //And, of course, fogger state
+  logger<<fan.get(); //And fan state
   logger<<";"; //Line end
 
 
